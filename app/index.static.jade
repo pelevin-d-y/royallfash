@@ -1,0 +1,118 @@
+doctype html
+head
+  title Crystal
+  meta(http-equiv="Content-Type" content="text/html; charset=utf-8")
+  meta(name="viewport" content="width=device-width")
+  meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
+  meta(name="format-detection" content="telephone=no")
+  link(rel="stylesheet" href="stylesheets/app.css")
+  link(rel="shortcut icon" href="http://crystalawardsparty.ru/assets/26c73aa/images/favicon.ico" type="image/x-icon")
+body
+  div
+    .main-nav-overlay
+      nav.main-nav
+        ul
+          li
+            a(href="#page-1").main-nav__link
+              | Главная
+          li
+            a(href="#page-2").main-nav__link
+              | Место проведния
+          li
+            a(href="#page-3").main-nav__link
+              | Dress code
+          li
+            a(href="#page-4").main-nav__link
+              | Рассадка
+          li
+            a(href="#page-5").main-nav__link
+              | Контакты
+    .navBurger#navToggle
+  div#fullpage
+    header.container.page-header.section
+      .page-header__content
+        .page-header__img
+          img(class='img' src='./images/header.png')
+        .page-header__text
+          | Не секрет, что гордость – это особенное и сильное чувство, благодаря которому
+
+        .page-header__text
+          | можно обратить внимание на свои достижения, умения и сильные стороны, поэтому
+        .page-header__text
+          | приглашаем самых лучших сотрудников на празднование Дня Компании
+    section.location.container.section
+      .location__content
+        .location__text
+          | Мы ждем вас
+          .location__data
+            | 25 января
+          .location__data-time
+            | сбор гостей
+            br
+            .location__data-time-div
+              | с
+              span.location__data-time-before
+                = ' '
+                | 18:00
+                =' '
+              | до
+              span.location__data-time-after
+                = ' '
+                | 19:00
+        .location__map
+          a(href="./images/map.png" data-fancybox).location__map-link
+            img(class='map' src='./images/map.png')
+          .location__map-text
+            | Вся информация о трансфере будет вам выслана дополнительно
+    section.container.section
+      .dress-code
+        .dress-code__text
+          .dress-code__title
+            | Рекомендуемый DRESS CODE
+          .dress-code__section-title
+            | Леди
+          .dress-code__section-text
+            | Вечерние и коктейльные платья. Вечерний make-up, пайетки и аксессуары, подчеркивающие сияние вашей красоты.
+          .dress-code__section-title
+            | Джентельмены
+          .dress-code__section-text
+            | Black-tie, intelligent, casual и все, что сделает вас неотразимым. Приветствуются аксессуары в crystal стилистике.
+        .dress-code__img
+          img(src="./images/people.png" class="derss-code__people")
+    section.container.section
+      .seating__content
+        .seating__title
+          | Рассадка
+        form(action="#", method="get").seating-form
+          input(type="text" name="surname" placeholder = "Введите ФИО" class = "seating__input")
+          button.seating__button
+            | Узнать номер стола
+    section.container.section
+      .contacts
+        .contacts__questions
+          | При возникновении вопросов вы можете обратиться:
+        .contacts__name
+          | Мария Гурьева
+        .contacts__contacts-block
+          .contacts__email
+            | E-mail:
+            = ' '
+            a(href= "mailto:mvgureva@rnd.beeline.ru")
+               | mvgureva@rnd.beeline.ru
+          .contacts__tel
+            | Тел.: +7 961 274 50 63
+  .popup
+    .popup-overlay
+      .popup-container
+        button.popup-close
+        .popup__text
+          | Ваш номер стола:
+        .popup__number
+          | Нет совпадений
+
+  script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js")
+  script(src="javascripts/vendor.js")
+  script(src="javascripts/app.js")
+
+  script.
+    require('initialize');

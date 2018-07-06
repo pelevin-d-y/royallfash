@@ -1,0 +1,59 @@
+.dress-code {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  margin-left: 9vw;
+}
+
+.dress-code__text {
+  max-width: 600px;
+  padding: 40px;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.dress-code__title {
+  margin-bottom: 20px;
+
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.dress-code__section-title {
+  margin-bottom: 10px;
+
+  font-size: 18px;
+  font-weight: bold;
+  // color: #e9c838;
+  // text-shadow: 0 0 10px rgba(255, 210, 119, 0.5);
+}
+
+.dress-code__section-text {
+  margin-bottom: 20px;
+}
+
+.derss-code__people {
+  max-width: 380px;
+}
+
+@media (max-width: 768px) {
+  .dress-code {
+    margin: 0;
+    margin-top: 30px;
+  }
+
+  .dress-code__img {
+    display: none;
+  }
+
+  .dress-code__section-text {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 550px) {
+  .dress-code__text {
+    padding: 25px;
+  }
+}
