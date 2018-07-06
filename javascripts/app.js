@@ -1811,17 +1811,9 @@ var _fullpage = require('fullpage.js');
 
 var _fullpage2 = _interopRequireDefault(_fullpage);
 
-var _jqueryAutocomplete = require('jquery-autocomplete');
-
-var _jqueryAutocomplete2 = _interopRequireDefault(_jqueryAutocomplete);
-
 var _fancybox = require('@fancyapps/fancybox');
 
 var _fancybox2 = _interopRequireDefault(_fancybox);
-
-var _data = require('./data');
-
-var _data2 = _interopRequireDefault(_data);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1856,27 +1848,16 @@ jQuery('.location__map-link').fancybox({
 
 var formButton = (0, _jquery2.default)('.seating__button');
 var popupButtonClose = (0, _jquery2.default)('.popup-close');
-var seatInput = jQuery(".seating__input");
-
-var FullNameArray = _data2.default.map(function (element) {
-		return element['ФИО'];
-});
-
-seatInput.autocomplete({
-		source: [FullNameArray],
-		limit: 20,
-		visibleLimit: 6
-});
 
 formButton.click(function (evt) {
 		evt.preventDefault();
 
-		var coincidence = _data2.default.some(function (element) {
+		var coincidence = dataList.some(function (element) {
 				return seatInput.val() === element['ФИО'];
 		});
 
 		if (coincidence) {
-				_data2.default.forEach(function (element) {
+				dataList.forEach(function (element) {
 						if (seatInput.val() === element['ФИО']) {
 								(0, _jquery2.default)('.popup__text').removeClass('hidden');
 								(0, _jquery2.default)('.popup__number').text(element['стол']);
