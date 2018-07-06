@@ -17,7 +17,7 @@ body
               | Главная
           li
             a(href="#page-2").main-nav__link
-              | Место проведния
+              | Регистрация
           li
             a(href="#page-3").main-nav__link
               | Dress code
@@ -29,41 +29,41 @@ body
               | Контакты
     .navBurger#navToggle
   div#fullpage
+
     header.container.page-header.section
       .page-header__content
         .page-header__img
           img(class='img' src='./images/header.png')
         .page-header__text
           | Не секрет, что гордость – это особенное и сильное чувство, благодаря которому
-
         .page-header__text
           | можно обратить внимание на свои достижения, умения и сильные стороны, поэтому
         .page-header__text
           | приглашаем самых лучших сотрудников на празднование Дня Компании
-    section.location.container.section
-      .location__content
-        .location__text
-          | Мы ждем вас
-          .location__data
-            | 25 января
-          .location__data-time
-            | сбор гостей
-            br
-            .location__data-time-div
-              | с
-              span.location__data-time-before
-                = ' '
-                | 18:00
-                =' '
-              | до
-              span.location__data-time-after
-                = ' '
-                | 19:00
-        .location__map
-          a(href="./images/map.png" data-fancybox).location__map-link
-            img(class='map' src='./images/map.png')
-          .location__map-text
-            | Вся информация о трансфере будет вам выслана дополнительно
+
+    section.container.section
+      .seating__content
+        .seating__title
+          | Внимание!
+        .seating__descr
+          | Подтвердите свое присутствие на мероприятии до 23 июля 2018 года
+        form(action="#", method="get").seating-form
+          label(class="seating-form__label")
+            .btn.small
+              span
+                | Загрузить фото
+              .gradient
+            input(type="file" name="foto" class="seating-form__file")
+          .seating-form__label-description
+            | * фото хорошего качества, не темное, портретного вида
+          input(type="text" name="surname" placeholder = "Введите ФИО" class = "seating__input")
+          .seating-form__label-description
+            | ** если присутствие не будет подтверждено, вас не будет в списках на входе.
+          button.btn
+            span
+              | Приду
+            .gradient
+
     section.container.section
       .dress-code
         .dress-code__text
@@ -79,14 +79,39 @@ body
             | Black-tie, intelligent, casual и все, что сделает вас неотразимым. Приветствуются аксессуары в crystal стилистике.
         .dress-code__img
           img(src="./images/people.png" class="derss-code__people")
-    section.container.section
-      .seating__content
-        .seating__title
-          | Рассадка
-        form(action="#", method="get").seating-form
-          input(type="text" name="surname" placeholder = "Введите ФИО" class = "seating__input")
-          button.seating__button
-            | Узнать номер стола
+
+    section.location.container.section
+      .location__content
+        .location__text
+          | Мы ждем вас
+          .location__data
+            | 2 августа
+          .location__data-time
+            | сбор гостей
+            br
+            .location__data-time-div
+              | с
+              span.location__data-time-before
+                = ' '
+                | 17:00
+                =' '
+              | до
+              span.location__data-time-after
+                = ' '
+                | 18:00
+        .location__map
+          a(href="./images/map.png" data-fancybox).location__map-link
+          script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyByUg22uv5jdTNNL6lD50kut7Lyt8QAB0A')
+          div.location__map-map
+            #gmap_canvas
+            style.
+              #gmap_canvas img{max-width:none!important;background:none!important}
+          script(type='text/javascript').
+            function init_map(){var myOptions = {zoom:15,center:new google.maps.LatLng(47.273538636058625,39.82239251927058),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(47.273538636058625,39.82239251927058)});infowindow = new google.maps.InfoWindow({content:'<strong>Название</strong><br>Ростов-на-Дону ул. шолохова 318<br>'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);
+
+          .location__map-text
+            | Вся информация о трансфере будет вам выслана дополнительно
+
     section.container.section
       .contacts
         .contacts__questions
@@ -101,6 +126,7 @@ body
                | mvgureva@rnd.beeline.ru
           .contacts__tel
             | Тел.: +7 961 274 50 63
+
   .popup
     .popup-overlay
       .popup-container

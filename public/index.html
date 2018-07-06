@@ -14,7 +14,7 @@
       <nav class="main-nav">
         <ul>
           <li><a href="#page-1" class="main-nav__link">Главная</a></li>
-          <li><a href="#page-2" class="main-nav__link">Место проведния</a></li>
+          <li><a href="#page-2" class="main-nav__link">Регистрация</a></li>
           <li><a href="#page-3" class="main-nav__link">Dress code</a></li>
           <li><a href="#page-4" class="main-nav__link">Рассадка</a></li>
           <li><a href="#page-5" class="main-nav__link">Контакты</a></li>
@@ -32,17 +32,24 @@
         <div class="page-header__text">приглашаем самых лучших сотрудников на празднование Дня Компании</div>
       </div>
     </header>
-    <section class="location container section">
-      <div class="location__content">
-        <div class="location__text">Мы ждем вас
-          <div class="location__data">25 января</div>
-          <div class="location__data-time">сбор гостей<br>
-            <div class="location__data-time-div">с<span class="location__data-time-before"> 18:00 </span>до<span class="location__data-time-after"> 19:00</span></div>
-          </div>
-        </div>
-        <div class="location__map"><a href="./images/map.png" data-fancybox class="location__map-link"><img src="./images/map.png" class="map"></a>
-          <div class="location__map-text">Вся информация о трансфере будет вам выслана дополнительно</div>
-        </div>
+    <section class="container section">
+      <div class="seating__content">
+        <div class="seating__title">Внимание!</div>
+        <div class="seating__descr">Подтвердите свое присутствие на мероприятии до 23 июля 2018 года</div>
+        <form action="#" method="get" class="seating-form">
+          <label class="seating-form__label">
+            <div class="btn small"><span>Загрузить фото</span>
+              <div class="gradient"></div>
+            </div>
+            <input type="file" name="foto" class="seating-form__file">
+          </label>
+          <div class="seating-form__label-description">* фото хорошего качества, не темное, портретного вида</div>
+          <input type="text" name="surname" placeholder="Введите ФИО" class="seating__input">
+          <div class="seating-form__label-description">** если присутствие не будет подтверждено, вас не будет в списках на входе.</div>
+          <button class="btn"><span>Приду</span>
+            <div class="gradient"></div>
+          </button>
+        </form>
       </div>
     </section>
     <section class="container section">
@@ -57,13 +64,26 @@
         <div class="dress-code__img"><img src="./images/people.png" class="derss-code__people"></div>
       </div>
     </section>
-    <section class="container section">
-      <div class="seating__content">
-        <div class="seating__title">Рассадка</div>
-        <form action="#" method="get" class="seating-form">
-          <input type="text" name="surname" placeholder="Введите ФИО" class="seating__input">
-          <button class="seating__button">Узнать номер стола</button>
-        </form>
+    <section class="location container section">
+      <div class="location__content">
+        <div class="location__text">Мы ждем вас
+          <div class="location__data">2 августа</div>
+          <div class="location__data-time">сбор гостей<br>
+            <div class="location__data-time-div">с<span class="location__data-time-before"> 17:00 </span>до<span class="location__data-time-after"> 18:00</span></div>
+          </div>
+        </div>
+        <div class="location__map"><a href="./images/map.png" data-fancybox class="location__map-link"></a>
+          <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByUg22uv5jdTNNL6lD50kut7Lyt8QAB0A"></script>
+          <div class="location__map-map">
+            <div id="gmap_canvas"></div>
+            <style>#gmap_canvas img{max-width:none!important;background:none!important}</style>
+          </div>
+          <script type="text/javascript">
+            function init_map(){var myOptions = {zoom:15,center:new google.maps.LatLng(47.273538636058625,39.82239251927058),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(47.273538636058625,39.82239251927058)});infowindow = new google.maps.InfoWindow({content:'<strong>Название</strong><br>Ростов-на-Дону ул. шолохова 318<br>'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);
+            
+          </script>
+          <div class="location__map-text">Вся информация о трансфере будет вам выслана дополнительно</div>
+        </div>
       </div>
     </section>
     <section class="container section">

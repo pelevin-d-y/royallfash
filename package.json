@@ -17,7 +17,6 @@
     "font-awesome": "^4.7.0",
     "fullpage.js": "^2.9.5",
     "jaded-brunch": "^2.2.6",
-    "jquery-autocomplete": "^1.2.1",
     "postcss-brunch": "^2.1.0",
     "postcss-flexbugs-fixes": "^3.2.0",
     "postcss-flexibility": "^2.0.0",

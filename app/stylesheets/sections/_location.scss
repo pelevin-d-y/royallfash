@@ -47,6 +47,13 @@
   margin-top: 5px;
 }
 
+#gmap_canvas {
+  height: 350px;
+  max-width: 600px;
+  width: 100%;
+  overflow: hidden;
+}
+
 .location__map-text {
   text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
   max-width: 650px;

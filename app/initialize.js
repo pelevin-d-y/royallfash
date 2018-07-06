@@ -1,8 +1,7 @@
 import $ from "jquery"
 import fullpage from 'fullpage.js'
-import autocomplete from 'jquery-autocomplete'
 import fancybox from '@fancyapps/fancybox'
-import dataList from './data'
+
 
 
 var UserAgentString = navigator.userAgent;
@@ -37,17 +36,8 @@ $(document).ready(function() {
 
 var formButton = $('.seating__button');
 var popupButtonClose = $('.popup-close');
-var seatInput = jQuery(".seating__input");
 
-const FullNameArray = dataList.map((element) => {
-  return element['ФИО'];
-})
 
-seatInput.autocomplete({
-  source:[FullNameArray],
-  limit: 20,
-  visibleLimit: 6
-});
 
 formButton.click(function(evt) {
   evt.preventDefault();
