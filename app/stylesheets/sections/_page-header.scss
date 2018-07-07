@@ -22,6 +22,8 @@
 }
 
 .page-header__content {
+  position: relative;
+  z-index: 2;
   max-width: 650px;
   width: 100%;
 }
@@ -39,8 +41,7 @@
 
 @media (max-width: 768px) {
   .page-header__text {
-    color: #fff;
-    text-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    font-size: 19px;
   }
 }
 
@@ -50,6 +51,7 @@
   }
 
   .page-header__text {
-      font-size: 19px;
+      font-size: 16px;
+      line-height: 18px;
   }
 }

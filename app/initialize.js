@@ -2,16 +2,6 @@ import $ from "jquery"
 import fullpage from 'fullpage.js'
 import fancybox from '@fancyapps/fancybox'
 
-
-
-var UserAgentString = navigator.userAgent;
-
-if(UserAgentString.indexOf('Trident/7.0') + 1) {
-  $('#c1').addClass('hidden')
-  $('#c2').addClass('hidden')
-}
-
-
 jQuery('.location__map-link').fancybox({
   afterLoad: function() {
     $.fn.fullpage.setAllowScrolling(false);
@@ -34,32 +24,18 @@ $(document).ready(function() {
 
 // autocomplete and popup
 
-var formButton = $('.seating__button');
+var formButton = $('.btn-come');
 var popupButtonClose = $('.popup-close');
-
-
+var popupButtonLink = $('.btn-popup__link')
 
 formButton.click(function(evt) {
   evt.preventDefault();
-
-  var coincidence = dataList.some((element) => {
-    return seatInput.val() === element['ФИО']
-  });
-
-  if (coincidence) {
-    dataList.forEach((element) => {
-      if (seatInput.val() === element['ФИО']) {
-        $('.popup__text').removeClass('hidden');
-        $('.popup__number').text(element['стол']);
-      }
-    });
-  } else {
-    $('.popup__text').addClass('hidden');
-    $('.popup__number').text('Имя не найдено');
-  }
-
   $('.popup').addClass('open-popup');
 });
+
+popupButtonLink.click(function() {
+	$('.popup').removeClass('open-popup');
+})
 
 popupButtonClose.click(function() {
   $('.popup').removeClass('open-popup');
@@ -114,132 +90,41 @@ $('.popup').click(function(evt) {
 })
 
 
-// canvas
 
-var c1 = document.getElementById( 'c1' ),
-	ctx1 = c1.getContext( '2d' ),
-	c2 = document.getElementById( 'c2' ),
-	ctx2 = c2.getContext( '2d' ),
-	twopi = Math.PI * 2,
-	parts = [],
-	sizeBase,
-	opt,
-	hue,
-	count;
+// file
+$(function(){
+	var wrapper = $( ".file_upload" ),
+			inp = wrapper.find( "input" ),
+			btn = wrapper.find( ".button" ),
+			lbl = wrapper.find( "mark" );
 
-var cw;
-var ch;
+	// Crutches for the :focus style:
+	inp.focus(function(){
+			wrapper.addClass( "focus" );
+	}).blur(function(){
+			wrapper.removeClass( "focus" );
+	});
 
-function rand( min, max ) {
-	return Math.random() * ( max - min ) + min;
-}
+	var file_api = ( window.File && window.FileReader && window.FileList && window.Blob ) ? true : false;
 
-function hsla( h, s, l, a ) {
-	return 'hsla(' + h + ',' + s + '%,' + l + '%,' + a + ')';
-}
+	inp.change(function(){
+			var file_name;
+			if( file_api && inp[ 0 ].files[ 0 ] )
+					file_name = inp[ 0 ].files[ 0 ].name;
+			else
+					file_name = inp.val().replace( "C:\\fakepath\\", '' );
 
-function create() {
-	sizeBase = cw + ch;
-	count = Math.floor( sizeBase * 0.3 ),
-	hue = 180,
-	opt = {
-		radiusMin: 1,
-		radiusMax: sizeBase * 0.04 * 2,
-		blurMin: 10,
-		blurMax: sizeBase * 0.04 * 4,
-		hueMin: hue,
-		hueMax: hue + 40,
-		saturationMin: 20,
-		saturationMax: 50,
-		lightnessMin: 20,
-		lightnessMax: 30,
-		alphaMin: 0.2,
-		alphaMax: 0.3
-	}
-	ctx1.clearRect( 0, 0, cw, ch );
-	ctx1.globalCompositeOperation = 'lighter';
-	while( count-- ) {
-		var radius = rand( opt.radiusMin, opt.radiusMax ),
-			blur = rand( opt.blurMin, opt.blurMax ),
-			x = rand( 0, cw ),
-			y = rand( 0, ch ),
-			hue = rand(opt.hueMin, opt.hueMax ),
-			saturation = rand( opt.saturationMin, opt.saturationMax ),
-			lightness = rand(  opt.lightnessMin, opt.lightnessMax ),
-			alpha = rand( opt.alphaMin, opt.alphaMax );
+			if( ! file_name.length )
+					return;
 
+			if( lbl.is( ":visible" ) ){
+					lbl.text( file_name );
+					btn.text( "Выбрать" );
+			}else
+					btn.text( file_name );
+	}).change();
 
-		ctx1.shadowColor = hsla( hue, saturation, lightness, alpha );
-		ctx1.shadowBlur = blur;
-		ctx1.beginPath();
-		ctx1.arc( x, y, radius, 0, twopi );
-		ctx1.closePath();
-		ctx1.fill();
-	}
-
-	parts.length = 0;
-	for( var i = 0; i < Math.floor( ( cw + ch ) * 0.03 ); i++ ) {
-		parts.push({
-			radius: rand( 1, sizeBase * 0.03 ),
-			x: rand( 0, cw ),
-			y: rand( 0, ch ),
-			angle: rand( 0, twopi ),
-			vel: rand( 0.1, 0.5 ),
-			tick: rand( 0, 10000 )
-		});
-	}
-}
-
-function init() {
-	resize();
-	create();
-	loop();
-}
-
-function loop() {
-	requestAnimationFrame( loop );
-
-	ctx2.clearRect( 0, 0, cw, ch );
-	ctx2.globalCompositeOperation = 'source-over';
-	ctx2.shadowBlur = 0;
-	ctx2.drawImage( c1, 0, 0 );
-	ctx2.globalCompositeOperation = 'lighter';
-
-	var i = parts.length;
-	ctx2.shadowBlur = 10;
-	ctx2.shadowColor = '#fff';
-	while( i-- ) {
-		var part = parts[ i ];
-
-		part.x += Math.cos( part.angle ) * part.vel;
-		part.y += Math.sin( part.angle ) * part.vel;
-		part.angle += rand( -0.05, 0.05 );
-
-		ctx2.beginPath();
-		ctx2.arc( part.x, part.y, part.radius, 0, twopi );
-		ctx2.fillStyle = hsla( 0, 0, 100, 0.075 + Math.cos( part.tick * 0.02 ) * 0.05 );
-		ctx2.fill();
-
-		if( part.x - part.radius > cw ) { part.x = -part.radius }
-		if( part.x + part.radius < 0 )  { part.x = cw + part.radius }
-		if( part.y - part.radius > ch ) { part.y = -part.radius }
-		if( part.y + part.radius < 0 )  { part.y = ch + part.radius }
-
-		part.tick++;
-	}
-}
-
-function resize() {
-	cw = c1.width = c2.width = window.innerWidth,
-	ch = c1.height = c2.height = window.innerHeight;
-	create();
-}
-
-function click() {
-	create()
-}
-
-window.addEventListener( 'resize', resize );
-window.addEventListener( 'click', click );
-
-init();
+});
+$( window ).resize(function(){
+	$( ".file_upload input" ).triggerHandler( "change" );
+});

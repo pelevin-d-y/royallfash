@@ -1,6 +1,6 @@
 doctype html
 head
-  title Crystal
+  title Royal Flash Event
   meta(http-equiv="Content-Type" content="text/html; charset=utf-8")
   meta(name="viewport" content="width=device-width")
   meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
@@ -20,12 +20,9 @@ body
               | Регистрация
           li
             a(href="#page-3").main-nav__link
-              | Dress code
+              | Место проведения
           li
             a(href="#page-4").main-nav__link
-              | Рассадка
-          li
-            a(href="#page-5").main-nav__link
               | Контакты
     .navBurger#navToggle
   div#fullpage
@@ -40,77 +37,58 @@ body
           | можно обратить внимание на свои достижения, умения и сильные стороны, поэтому
         .page-header__text
           | приглашаем самых лучших сотрудников на празднование Дня Компании
-
     section.container.section
-      .seating__content
-        .seating__title
+      .registration__content
+        .registration__title
           | Внимание!
-        .seating__descr
+        .registration__descr
           | Подтвердите свое присутствие на мероприятии до 23 июля 2018 года
-        form(action="#", method="get").seating-form
-          label(class="seating-form__label")
-            .btn.small
-              span
-                | Загрузить фото
-              .gradient
-            input(type="file" name="foto" class="seating-form__file")
-          .seating-form__label-description
+        form(action="#", method="get").registration-form
+          label.file_upload
+            span.button Выбрать
+            mark Ваше фото
+            input(type='file')
+          .registration-form__label-description
             | * фото хорошего качества, не темное, портретного вида
-          input(type="text" name="surname" placeholder = "Введите ФИО" class = "seating__input")
-          .seating-form__label-description
+          input(type="text" name="surname" placeholder = "Введите ФИО" class = "registration__input")
+          .registration-form__label-description
             | ** если присутствие не будет подтверждено, вас не будет в списках на входе.
-          button.btn
+          button.btn.btn-come
             span
               | Приду
             .gradient
-
-    section.container.section
-      .dress-code
-        .dress-code__text
-          .dress-code__title
-            | Рекомендуемый DRESS CODE
-          .dress-code__section-title
-            | Леди
-          .dress-code__section-text
-            | Вечерние и коктейльные платья. Вечерний make-up, пайетки и аксессуары, подчеркивающие сияние вашей красоты.
-          .dress-code__section-title
-            | Джентельмены
-          .dress-code__section-text
-            | Black-tie, intelligent, casual и все, что сделает вас неотразимым. Приветствуются аксессуары в crystal стилистике.
-        .dress-code__img
-          img(src="./images/people.png" class="derss-code__people")
-
-    section.location.container.section
-      .location__content
-        .location__text
-          | Мы ждем вас
-          .location__data
-            | 2 августа
-          .location__data-time
-            | сбор гостей
-            br
-            .location__data-time-div
-              | с
-              span.location__data-time-before
-                = ' '
-                | 17:00
-                =' '
-              | до
-              span.location__data-time-after
-                = ' '
-                | 18:00
-        .location__map
-          a(href="./images/map.png" data-fancybox).location__map-link
-          script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyByUg22uv5jdTNNL6lD50kut7Lyt8QAB0A')
-          div.location__map-map
-            #gmap_canvas
-            style.
-              #gmap_canvas img{max-width:none!important;background:none!important}
-          script(type='text/javascript').
-            function init_map(){var myOptions = {zoom:15,center:new google.maps.LatLng(47.273538636058625,39.82239251927058),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(47.273538636058625,39.82239251927058)});infowindow = new google.maps.InfoWindow({content:'<strong>Название</strong><br>Ростов-на-Дону ул. шолохова 318<br>'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);
-
-          .location__map-text
-            | Вся информация о трансфере будет вам выслана дополнительно
+      .registration__background
+    section.location.section
+      .container
+        .location__content
+          .location__text
+            | Мы ждем вас
+            .location__data
+              | 2 августа
+            .location__data-time
+              | сбор гостей
+              br
+              .location__data-time-div
+                | с
+                span.location__data-time-before
+                  = ' '
+                  | 18:00
+                  =' '
+                | до
+                span.location__data-time-after
+                  = ' '
+                  | 19:00
+          .location__map
+            a(href="./images/map.png" data-fancybox).location__map-link
+            script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyByUg22uv5jdTNNL6lD50kut7Lyt8QAB0A')
+            div.location__map-map
+              #gmap_canvas
+              style.
+                #gmap_canvas img{max-width:none!important;background:none!important}
+            script(type='text/javascript').
+              function init_map(){var myOptions = {zoom:15,center:new google.maps.LatLng(47.273538636058625,39.82239251927058),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(47.273538636058625,39.82239251927058)});infowindow = new google.maps.InfoWindow({content:'<strong>Название</strong><br>Ростов-на-Дону ул. шолохова 318<br>'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);
+            .location__map-text
+              | Вся информация о трансфере будет вам выслана дополнительно
 
     section.container.section
       .contacts
@@ -126,15 +104,17 @@ body
                | mvgureva@rnd.beeline.ru
           .contacts__tel
             | Тел.: +7 961 274 50 63
-
+      .contacts__background
   .popup
     .popup-overlay
       .popup-container
         button.popup-close
         .popup__text
-          | Ваш номер стола:
-        .popup__number
-          | Нет совпадений
+          | Успешно!
+        a(href="#page-3").btn.btn-popup__link
+            span
+              | Место проведения
+            .gradient
 
   script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js")
   script(src="javascripts/vendor.js")

@@ -1,7 +1,9 @@
 .contacts {
-  margin-left: 9vw;
+  position: relative;
+  z-index: 2;
+
+  margin: 0 auto;
   padding: 40px;
-  background: rgba(0, 0, 0, 0.5);
   line-height: 30px;
   text-shadow: none;
 }
@@ -18,17 +20,30 @@
 }
 
 .contacts__email a {
-  color: #fff;
   text-decoration: underline;
+  color: #e9c838
 }
 
-.contacts__tel {
-  color: #fff;
+.contacts__background {
+  position: absolute;
+  z-index: 1;
+  left: 0;
+  bottom: 0;
+
+  width: 300px;
+  height: 400px;
+
+  background: url('../images/flower.jpg') no-repeat bottom; 
+  background-size: contain;
 }
 
 @media (max-width: 768px) {
   .contacts {
     margin: 0 auto;
     padding: 20px;
+  }
+
+  .contacts__background {
+    display: none;
   }
 }
