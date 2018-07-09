@@ -22,7 +22,15 @@ $(document).ready(function() {
   });
 });
 
-// autocomplete and popup
+document.querySelector('.location__map-map').addEventListener('touchstart' ,function() {
+  $.fn.fullpage.setAllowScrolling(false)
+})
+
+document.querySelector('.location__map-map').addEventListener('touchend' ,function() {
+  $.fn.fullpage.setAllowScrolling(true)
+})
+
+// popup
 
 var formButton = $('.btn-come');
 var popupButtonClose = $('.popup-close');
