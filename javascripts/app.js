@@ -185,9 +185,17 @@ jQuery('.location__map-link').fancybox({
   });
 });
 
-// autocomplete and popup
+document.querySelector('.location__map-map').addEventListener('touchstart', function () {
+  _jquery2.default.fn.fullpage.setAllowScrolling(false);
+});
 
-var formButton = (0, _jquery2.default)('.btn-come');
+document.querySelector('.location__map-map').addEventListener('touchend', function () {
+  _jquery2.default.fn.fullpage.setAllowScrolling(true);
+}
+
+// popup
+
+);var formButton = (0, _jquery2.default)('.btn-come');
 var popupButtonClose = (0, _jquery2.default)('.popup-close');
 var popupButtonLink = (0, _jquery2.default)('.btn-popup__link');
 
