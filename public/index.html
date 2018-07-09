@@ -37,13 +37,17 @@
       <div class="registration__content">
         <div class="registration__title">Внимание!</div>
         <div class="registration__descr">Подтвердите свое присутствие на мероприятии до 23 июля 2018 года</div>
-        <form action="#" method="get" class="registration-form">
-          <label class="file_upload"><span class="button">Выбрать</span>
-            <mark>Ваше фото</mark>
-            <input type="file">
-          </label>
+        <form action="/register" enctype="multipart/form-data" method="post" id="form" class="registration-form">
+          <div class="registration__input-wrapper">
+            <input type="file" name="form__file" id="form__file" class="form__file">
+            <label for="form__file" class="file_upload"><span class="button">Выбрать</span>
+              <mark>Ваше фото</mark>
+            </label>
+          </div>
           <div class="registration-form__label-description">* фото хорошего качества, не темное, портретного вида</div>
-          <input type="text" name="surname" placeholder="Введите ФИО" class="registration__input">
+          <div class="registration__input-wrapper">
+            <input type="text" name="form__surname" placeholder="Введите ФИО" id="surname" class="registration__input">
+          </div>
           <div class="registration-form__label-description">** если присутствие не будет подтверждено, вас не будет в списках на входе.</div>
           <button class="btn btn-come"><span>Приду</span>
             <div class="gradient"></div>

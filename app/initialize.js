@@ -1,19 +1,9 @@
 import $ from "jquery"
 import fullpage from 'fullpage.js'
-import fancybox from '@fancyapps/fancybox'
-
-jQuery('.location__map-link').fancybox({
-  afterLoad: function() {
-    $.fn.fullpage.setAllowScrolling(false);
-  },
-
-  afterClose: function() {
-    $.fn.fullpage.setAllowScrolling(true);
-  }
-})
+import axios from 'axios'
+import validate from 'jquery-validation'
 
 // fullpage
-
 $(document).ready(function() {
   $('#fullpage').fullpage({
     anchors:['page-1','page-2', 'page-3', 'page-4', 'page-5'],
@@ -36,10 +26,38 @@ var formButton = $('.btn-come');
 var popupButtonClose = $('.popup-close');
 var popupButtonLink = $('.btn-popup__link')
 
-formButton.click(function(evt) {
-  evt.preventDefault();
-  $('.popup').addClass('open-popup');
-});
+  // validate
+  $("#form").validate({
+    rules: {
+      form__surname: {
+        required: true
+      },
+      form__file: {
+        required: true
+      }
+    },
+    messages: {
+      form__surname: {
+        required: 'Введите ваше ФИО'
+      },
+
+      form__file: {
+        required: 'Выберите файл'
+      }
+    },
+    submitHandler: function(form) {
+      console.log(form)
+      form.submit()
+      // const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+
+      // axios.post('http://localhost:3000/register', config).then((res) => {
+      //   console.log(res.data)
+      // }).catch((err) => {
+      //   console.log(err)
+      // })
+      $('.popup').addClass('open-popup');
+    }
+  });
 
 popupButtonLink.click(function() {
 	$('.popup').removeClass('open-popup');
@@ -97,14 +115,12 @@ $('.popup').click(function(evt) {
   evt.stopPropagation();
 })
 
-
-
 // file
 $(function(){
 	var wrapper = $( ".file_upload" ),
-			inp = wrapper.find( "input" ),
 			btn = wrapper.find( ".button" ),
-			lbl = wrapper.find( "mark" );
+      lbl = wrapper.find( "mark" );
+  var inp = $( "#form__file" );
 
 	// Crutches for the :focus style:
 	inp.focus(function(){

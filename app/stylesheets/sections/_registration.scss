@@ -93,13 +93,12 @@
 } 
 
 .file_upload{
+  position: relative;
   display: block;
   margin-top: 15px;
   margin-bottom: 15px;
 
-
   position: relative;
-  overflow: hidden;
   
   font-size: 1em;              
   height: 2em;                 
@@ -213,5 +212,9 @@
 
   .registration-form__label-description {
     margin-bottom: 0;
+  }
+
+  .registration__input {
+    margin-top: 10px;
   }
 }

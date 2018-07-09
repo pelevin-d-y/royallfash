@@ -26,7 +26,6 @@ body
               | Контакты
     .navBurger#navToggle
   div#fullpage
-
     header.container.page-header.section
       .page-header__content
         .page-header__img
@@ -35,20 +34,23 @@ body
           | Не секрет, что гордость – это особенное и сильное чувство, благодаря которому
           | можно обратить внимание на свои достижения, умения и сильные стороны, поэтому
           | приглашаем самых лучших сотрудников на празднование Дня Компании
+
     section.container.section
       .registration__content
         .registration__title
           | Внимание!
         .registration__descr
           | Подтвердите свое присутствие на мероприятии до 23 июля 2018 года
-        form(action="#", method="get").registration-form
-          label.file_upload
-            span.button Выбрать
-            mark Ваше фото
-            input(type='file')
+        form(action="/register", enctype="multipart/form-data" method="post" id="form").registration-form
+          .registration__input-wrapper
+            input(class="form__file" type='file' name="form__file" id="form__file")
+            label.file_upload(for="form__file")
+              span.button Выбрать
+              mark Ваше фото
           .registration-form__label-description
             | * фото хорошего качества, не темное, портретного вида
-          input(type="text" name="surname" placeholder = "Введите ФИО" class = "registration__input")
+          .registration__input-wrapper
+            input(type="text" name="form__surname" placeholder="Введите ФИО" class="registration__input" id="surname")
           .registration-form__label-description
             | ** если присутствие не будет подтверждено, вас не будет в списках на входе.
           button.btn.btn-come
@@ -56,6 +58,7 @@ body
               | Приду
             .gradient
       .registration__background
+
     section.location.section
       .container
         .location__content
