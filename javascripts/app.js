@@ -159,25 +159,18 @@ var _fullpage = require('fullpage.js');
 
 var _fullpage2 = _interopRequireDefault(_fullpage);
 
-var _fancybox = require('@fancyapps/fancybox');
+var _axios = require('axios');
 
-var _fancybox2 = _interopRequireDefault(_fancybox);
+var _axios2 = _interopRequireDefault(_axios);
+
+var _jqueryValidation = require('jquery-validation');
+
+var _jqueryValidation2 = _interopRequireDefault(_jqueryValidation);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-jQuery('.location__map-link').fancybox({
-  afterLoad: function afterLoad() {
-    _jquery2.default.fn.fullpage.setAllowScrolling(false);
-  },
-
-  afterClose: function afterClose() {
-    _jquery2.default.fn.fullpage.setAllowScrolling(true);
-  }
-}
-
 // fullpage
-
-);(0, _jquery2.default)(document).ready(function () {
+(0, _jquery2.default)(document).ready(function () {
   (0, _jquery2.default)('#fullpage').fullpage({
     anchors: ['page-1', 'page-2', 'page-3', 'page-4', 'page-5'],
     menu: '#menu',
@@ -197,11 +190,39 @@ document.querySelector('.location__map-map').addEventListener('touchend', functi
 
 );var formButton = (0, _jquery2.default)('.btn-come');
 var popupButtonClose = (0, _jquery2.default)('.popup-close');
-var popupButtonLink = (0, _jquery2.default)('.btn-popup__link');
+var popupButtonLink = (0, _jquery2.default)('.btn-popup__link'
 
-formButton.click(function (evt) {
-  evt.preventDefault();
-  (0, _jquery2.default)('.popup').addClass('open-popup');
+// validate
+);(0, _jquery2.default)("#form").validate({
+  rules: {
+    form__surname: {
+      required: true
+    },
+    form__file: {
+      required: true
+    }
+  },
+  messages: {
+    form__surname: {
+      required: 'Введите ваше ФИО'
+    },
+
+    form__file: {
+      required: 'Выберите файл'
+    }
+  },
+  submitHandler: function submitHandler(form) {
+    console.log(form);
+    form.submit
+    // const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+
+    // axios.post('http://localhost:3000/register', config).then((res) => {
+    //   console.log(res.data)
+    // }).catch((err) => {
+    //   console.log(err)
+    // })
+    ();(0, _jquery2.default)('.popup').addClass('open-popup');
+  }
 });
 
 popupButtonLink.click(function () {
@@ -262,9 +283,9 @@ links.each(function (a, link) {
 // file
 );(0, _jquery2.default)(function () {
   var wrapper = (0, _jquery2.default)(".file_upload"),
-      inp = wrapper.find("input"),
       btn = wrapper.find(".button"),
       lbl = wrapper.find("mark");
+  var inp = (0, _jquery2.default)("#form__file");
 
   // Crutches for the :focus style:
   inp.focus(function () {
