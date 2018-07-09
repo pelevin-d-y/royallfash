@@ -205,3 +205,13 @@
     margin-bottom: 8px;
   }
 }
+
+@media (max-width: 500px) {
+  .registration__content {
+    padding-top: 60px;
+  }
+
+  .registration-form__label-description {
+    margin-bottom: 0;
+  }
+}
