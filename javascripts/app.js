@@ -212,8 +212,10 @@ var popupButtonLink = (0, _jquery2.default)('.btn-popup__link'
     }
   },
   submitHandler: function submitHandler(form) {
-    console.log(form);
-    form.submit
+    // console.log(form)
+    // form.submit()
+    (0, _jquery2.default)(form).ajaxSubmit();
+
     // const config = { headers: { 'Content-Type': 'multipart/form-data' } };
 
     // axios.post('http://localhost:3000/register', config).then((res) => {
@@ -221,7 +223,7 @@ var popupButtonLink = (0, _jquery2.default)('.btn-popup__link'
     // }).catch((err) => {
     //   console.log(err)
     // })
-    ();(0, _jquery2.default)('.popup').addClass('open-popup');
+    (0, _jquery2.default)('.popup').addClass('open-popup');
   }
 });
 
