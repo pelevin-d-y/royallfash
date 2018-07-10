@@ -46,8 +46,10 @@ var popupButtonLink = $('.btn-popup__link')
       }
     },
     submitHandler: function(form) {
-      console.log(form)
-      form.submit()
+      // console.log(form)
+      // form.submit()
+      $(form).ajaxSubmit();
+      
       // const config = { headers: { 'Content-Type': 'multipart/form-data' } };
 
       // axios.post('http://localhost:3000/register', config).then((res) => {
