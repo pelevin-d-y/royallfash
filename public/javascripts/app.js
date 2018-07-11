@@ -167,6 +167,8 @@ var _jqueryValidation = require('jquery-validation');
 
 var _jqueryValidation2 = _interopRequireDefault(_jqueryValidation);
 
+require('jquery-validation/dist/additional-methods');
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // fullpage
@@ -199,6 +201,7 @@ var popupButtonLink = (0, _jquery2.default)('.btn-popup__link'
       required: true
     },
     form__file: {
+      extension: 'png|jpg',
       required: true
     }
   },
@@ -208,22 +211,46 @@ var popupButtonLink = (0, _jquery2.default)('.btn-popup__link'
     },
 
     form__file: {
-      required: 'Выберите файл'
+      required: 'Выберите файл',
+      extension: 'расширение должно быть jpg или png'
     }
   },
   submitHandler: function submitHandler(form) {
-    // console.log(form)
-    // form.submit()
-    (0, _jquery2.default)(form).ajaxSubmit();
+    var data = new FormData(form);
+    var imagefile = form.querySelector('.form__file');
 
-    // const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+    var config = { headers: { 'Content-Type': 'multipart/form-data' } };
 
-    // axios.post('http://localhost:3000/register', config).then((res) => {
-    //   console.log(res.data)
-    // }).catch((err) => {
-    //   console.log(err)
-    // })
-    (0, _jquery2.default)('.popup').addClass('open-popup');
+    var _iteratorNormalCompletion = true;
+    var _didIteratorError = false;
+    var _iteratorError = undefined;
+
+    try {
+      for (var _iterator = data.entries()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
+        var pair = _step.value;
+
+        console.log(pair[0], pair[1]);
+      }
+    } catch (err) {
+      _didIteratorError = true;
+      _iteratorError = err;
+    } finally {
+      try {
+        if (!_iteratorNormalCompletion && _iterator.return) {
+          _iterator.return();
+        }
+      } finally {
+        if (_didIteratorError) {
+          throw _iteratorError;
+        }
+      }
+    }
+
+    _axios2.default.post('http://localhost:3000/register', data, config).then(function (res) {
+      console.log(res.data);
+    }).catch(function (err) {
+      console.log(err);
+    });
   }
 });
 

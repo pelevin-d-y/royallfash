@@ -2,6 +2,7 @@ import $ from "jquery"
 import fullpage from 'fullpage.js'
 import axios from 'axios'
 import validate from 'jquery-validation'
+import 'jquery-validation/dist/additional-methods'
 
 // fullpage
 $(document).ready(function() {
@@ -33,6 +34,7 @@ var popupButtonLink = $('.btn-popup__link')
         required: true
       },
       form__file: {
+        extension: 'png|jpg',
         required: true
       }
     },
@@ -42,22 +44,25 @@ var popupButtonLink = $('.btn-popup__link')
       },
 
       form__file: {
-        required: 'Выберите файл'
+        required: 'Выберите файл',
+        extension: 'расширение должно быть jpg или png'
       }
     },
     submitHandler: function(form) {
-      // console.log(form)
-      // form.submit()
-      $(form).ajaxSubmit();
-      
-      // const config = { headers: { 'Content-Type': 'multipart/form-data' } };
+      let data = new FormData(form)
+      const imagefile = form.querySelector('.form__file')
 
-      // axios.post('http://localhost:3000/register', config).then((res) => {
-      //   console.log(res.data)
-      // }).catch((err) => {
-      //   console.log(err)
-      // })
-      $('.popup').addClass('open-popup');
+      const config = { headers: { 'Content-Type': 'multipart/form-data' } }
+
+      for (var pair of data.entries()) {
+        console.log(pair[0], pair[1]); 
+      }
+
+      axios.post('http://localhost:3000/register', data, config).then((res) => {
+        console.log(res.data)
+      }).catch((err) => {
+        console.log(err)
+      })
     }
   });
 

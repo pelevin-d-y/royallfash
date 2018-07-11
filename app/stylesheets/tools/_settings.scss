@@ -53,14 +53,15 @@ img {
 
 input + .error {
   position: absolute;
-  bottom: -10px;
+  bottom: -4px;
   left: 0;
 
   font-size: 12px;
   color: #d94d71;
 }
 input[type=file] + .error {
-  bottom: -33px;
+  bottom: 1px;
+  left: 0;
 }
 
 input.error {
@@ -81,5 +82,22 @@ input.error {
 @media (max-width: 600px) {
   .container {
     padding: 0 12px;
+  }
+}
+
+@media (max-width: 500px) {
+  input + .error {
+    position: absolute;
+    top: -4px;
+    left: 0;
+    bottom: auto;
+  
+    font-size: 12px;
+    color: #d94d71;
+  }
+  input[type=file] + .error {
+    top: 1px;
+    left: 0;
+    bottom: auto;
   }
 }

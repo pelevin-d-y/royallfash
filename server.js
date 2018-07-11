@@ -9,11 +9,6 @@ var app = express()
 
 app.use(express.static(__dirname + "/public"));
 
-
-let getRandomInt = (min, max) => {
-  return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 mongoose.connect("mongodb://localhost:27017/users").then(client => {
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -43,6 +38,9 @@ mongoose.connect("mongodb://localhost:27017/users").then(client => {
   let User = mongoose.model('User', userSchema)
 
   app.post('/register', sUpload, (req, res, next) => {
+    console.log('req.body' , req.body)
+    console.log('req.file', req.file)
+    
     let DbUser = new User ({
       name: req.body.form__surname,
       path: req.file.path
@@ -54,19 +52,6 @@ mongoose.connect("mongodb://localhost:27017/users").then(client => {
     })
   })
 });
-
-
-
-// mongo
-// mongoClient.connect("mongodb://localhost:27017/", { useNewUrlParser: true }, function(err, client){
-//   const db = client.db("usersdb");
-//   const collection = db.collection("users");
-//   let user = {name: "Tom", age: 23};
-
-//   collection.insertOne(user, function(err, result) {
-
-//   });
-// });
 
 
 
