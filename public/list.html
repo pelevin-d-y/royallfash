@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<head>
+  <title>Royal Flash Event</title>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta name="format-detection" content="telephone=no">
+  <link rel="stylesheet" href="stylesheets/app.css">
+  <link rel="shortcut icon" href="http://crystalawardsparty.ru/assets/26c73aa/images/favicon.ico" type="image/x-icon">
+</head>
+<body>
+  <div class="container">
+    <div class="registration__title registration__title-list">Введите пожалуйста вашу фамилию, имя, отчество</div>
+    <form action="/exist" method="post" id="registration-form" class="registration-form">
+      <div class="registration__input-wrapper">
+        <input type="text" name="name" placeholder="Введите ФИО" id="name" class="registration__input">
+      </div>
+      <button class="btn"><span>Подтвердить</span>
+        <div class="gradient"></div>
+      </button>
+    </form>
+    <div class="popup registration-popup">
+      <div class="popup-wrapper">
+        <div class="popup-container popup-container__registration">
+          <button class="popup-close"></button>
+          <div class="registration-popup__title">Совпадения:</div>
+          <form action="post" method="/come" id="registration-form__come">
+            <div class="popup__text"> </div>
+            <button class="btn"><span>Пришел</span>
+              <div class="gradient"></div>
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="popup-overlay popup-overlay__registration hidden"></div>
+  </div>
+  <script src="javascripts/vendor.js"></script>
+  <script src="javascripts/app.js"></script>
+  <script>require('initialize');</script>
+</body>

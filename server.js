@@ -1,58 +1,49 @@
 const express = require("express")
-const path = require('path')
-const multer = require('multer')
-const mongoClient = require("mongodb").MongoClient
 const mongoose = require('mongoose')
-const crypto = require('crypto')
+const bodyParser = require("body-parser")
+const multerStorage = require('./server/multerStorage')
+const userModel = require('./server/userModel')
 
-var app = express()
+const app = express()
+app.use(bodyParser.json())
 
 app.use(express.static(__dirname + "/public"));
+app.use("/uploads", express.static("uploads"));
 
-mongoose.connect("mongodb://localhost:27017/users").then(client => {
-  const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-      cb(null, 'uploads/')
-    },
-    filename: function (req, file, cb) {
-      crypto.randomBytes(16, (err, buf) => {
-        if (err) {
-          return console.log(err)
-        }
-        const filename = buf.toString('hex')
-
-        cb(null, filename + file.originalname)
-      })
-    }
-  })
-  
-  const upload = multer({ storage: storage })
-
-  const sUpload = upload.single('form__file');
-
-  let userSchema = mongoose.Schema({
-    name: String,
-    path: String
-  })
-
-  let User = mongoose.model('User', userSchema)
-
-  app.post('/register', sUpload, (req, res, next) => {
-    console.log('req.body' , req.body)
-    console.log('req.file', req.file)
-    
-    let DbUser = new User ({
+mongoose.connect("mongodb://localhost:27017/users").then(() => {
+  const mongooseUserModel = userModel()
+  app.post('/register', multerStorage(), (req, res, next) => {
+    let DbUser = mongooseUserModel ({
       name: req.body.form__surname,
-      path: req.file.path
+      path: req.file.path,
+      come: false
     })
 
     DbUser.save((err) => {
       if (err) throw err;
       console.log('User successfully saved.');
     })
+
+    return res.send('success')
+  })
+  app.post('/exist', (req, res) => {
+     return mongooseUserModel.find({ 'name': req.body.name }, (err, currentUserModel) => {
+      if (err) return console.log(err)
+      if (currentUserModel) {
+        return res.send(
+          { exist: 'exist', "currentUserModel": currentUserModel }
+        )
+      }
+    })
+  })
+
+  app.post('/come', (req, res) => {
+    console.log('req.body', req.body)
+    return mongooseUserModel.update({ _id: req.body.name }, { $set: { come: true }}, (err, model) => {
+      if (err) return console.log('update', err)
+      return res.send(model)
+    });
   })
 });
-
-
 
 app.listen(3000);

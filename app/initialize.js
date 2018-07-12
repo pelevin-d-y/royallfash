@@ -3,6 +3,7 @@ import fullpage from 'fullpage.js'
 import axios from 'axios'
 import validate from 'jquery-validation'
 import 'jquery-validation/dist/additional-methods'
+import userCards from './userCard'
 
 // fullpage
 $(document).ready(function() {
@@ -13,16 +14,17 @@ $(document).ready(function() {
   });
 });
 
-document.querySelector('.location__map-map').addEventListener('touchstart' ,function() {
-  $.fn.fullpage.setAllowScrolling(false)
-})
+if (document.querySelector('.location__map-map')) {
+  document.querySelector('.location__map-map').addEventListener('touchstart' ,function() {
+    $.fn.fullpage.setAllowScrolling(false)
+  })
 
-document.querySelector('.location__map-map').addEventListener('touchend' ,function() {
-  $.fn.fullpage.setAllowScrolling(true)
-})
+  document.querySelector('.location__map-map').addEventListener('touchend' ,function() {
+    $.fn.fullpage.setAllowScrolling(true)
+  })
+}
 
 // popup
-
 var formButton = $('.btn-come');
 var popupButtonClose = $('.popup-close');
 var popupButtonLink = $('.btn-popup__link')
@@ -34,7 +36,7 @@ var popupButtonLink = $('.btn-popup__link')
         required: true
       },
       form__file: {
-        extension: 'png|jpg',
+        extension: 'png|jpg|jpeg',
         required: true
       }
     },
@@ -50,24 +52,73 @@ var popupButtonLink = $('.btn-popup__link')
     },
     submitHandler: function(form) {
       let data = new FormData(form)
-      const imagefile = form.querySelector('.form__file')
-
       const config = { headers: { 'Content-Type': 'multipart/form-data' } }
 
-      for (var pair of data.entries()) {
-        console.log(pair[0], pair[1]); 
-      }
-
       axios.post('http://localhost:3000/register', data, config).then((res) => {
-        console.log(res.data)
+        if (res.data === 'success') {
+          $('.popup__text').text('Успешно!')
+          $('.popup').addClass('open-popup')
+        }
       }).catch((err) => {
         console.log(err)
       })
     }
   });
 
+  $("#registration-form").validate({
+    rules: {
+      name: {
+        required: true
+      }
+    },
+    messages: {
+      name: {
+        required: 'Введите ваше ФИО'
+      }
+    },
+    submitHandler: function(form) {
+      let data = new FormData(form)
+      let feldData = data.get('name')
+
+      axios.post('http://localhost:3000/exist', {'name': feldData}).then((res) => {
+        if (res.data.exist === 'exist') {
+          $(".registration-item__content").remove()
+          userCards(res.data.currentUserModel)
+          
+          $('.registration-popup').addClass('open-popup');
+          $('.popup-overlay__registration').removeClass('hidden')
+        }
+      }).catch((err) => {
+        console.log(err)
+      })
+    }
+  });
+
+  $("#registration-form__come").validate({
+    rules: {
+      card: {
+        required: true
+      },
+    },
+    messages: {
+      card: {
+        required: ''
+      }
+    },
+    submitHandler: function(form) {
+      let data = new FormData(form)
+      let feldData = data.get('card')
+
+      axios.post('http://localhost:3000/come', {'name': feldData}).then((res) => {
+        console.log(res)
+        $('.registration-popup').addClass('open-popup');
+        $('.popup-overlay__registration').removeClass('hidden')
+      })
+    }
+  })
+
 popupButtonLink.click(function() {
-	$('.popup').removeClass('open-popup');
+  $('.popup').removeClass('open-popup');
 })
 
 popupButtonClose.click(function() {
@@ -75,22 +126,33 @@ popupButtonClose.click(function() {
 })
 
 $('.popup-overlay').click(function(evt) {
-    if ($(evt.target).closest('.popup-container').length == 0) {
+  if ($(evt.target).closest('.popup-container').length == 0) {
     $('.popup').removeClass('open-popup');
   }
 });
 
-// navigation
+$('.registration-popup').click(function(evt) {
+  const registrationPopup = document.querySelector('.registration-popup')
+  if (evt.target === registrationPopup) {
+    $('.popup').removeClass('open-popup');
+    $('.popup-overlay__registration').addClass('hidden')
+  }
+})
 
+$('.registration-popup .popup-close').click(function() {
+  $('.popup').removeClass('open-popup');
+  $('.popup-overlay__registration').addClass('hidden')
+})
+
+// navigation
 $("#navToggle").click(function(evt) {
-  evt.stopPropagation();
-  $(this).toggleClass("active");
-  $(".main-nav-overlay").toggleClass("open");
-  $("body").toggleClass("locked");
+  evt.stopPropagation()
+  $(this).toggleClass("active")
+  $(".main-nav-overlay").toggleClass("open")
+  $("body").toggleClass("locked")
 });
 
 var links = $('.main-nav__link')
-
 
 links.each(function(a, link) {
   link.addEventListener('click', () => {
@@ -121,6 +183,7 @@ $('#fullpage').click(function(evt) {
 $('.popup').click(function(evt) {
   evt.stopPropagation();
 })
+
 
 // file
 $(function(){

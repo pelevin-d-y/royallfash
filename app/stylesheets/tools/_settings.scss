@@ -36,7 +36,7 @@ img {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 .ie-bg {
@@ -49,6 +49,7 @@ img {
 
 .registration__input-wrapper {
   position: relative;
+  text-align: center;
 }
 
 input + .error {

@@ -8,6 +8,9 @@
 
   color: #000;
   visibility: hidden;
+
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .popup-overlay {
@@ -16,7 +19,7 @@
   left: 0;
   top: 0;
   right: 0;
-  z-index: 110;
+  z-index: 100;
   overflow: hidden;
   background: rgba(42, 49, 64, 0.85);
 
@@ -30,6 +33,12 @@
 .popup-overlay .open {
   opacity: 0.99;
   visibility: visible;
+}
+
+.popup-wrapper {
+  max-width: 500px;
+  margin: 1.75rem auto;
+  transform: translate(0,0);
 }
 
 .popup-container {

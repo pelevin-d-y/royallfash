@@ -1,0 +1,41 @@
+doctype html
+head
+  title Royal Flash Event
+  meta(http-equiv="Content-Type" content="text/html; charset=utf-8")
+  meta(name="viewport" content="width=device-width")
+  meta(name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no")
+  meta(name="format-detection" content="telephone=no")
+  link(rel="stylesheet" href="stylesheets/app.css")
+  link(rel="shortcut icon" href="http://crystalawardsparty.ru/assets/26c73aa/images/favicon.ico" type="image/x-icon")
+body
+  .container
+    .registration__title.registration__title-list
+      | Введите пожалуйста вашу фамилию, имя, отчество
+    form(action="/exist" method="post" id="registration-form").registration-form
+      .registration__input-wrapper
+        input(type="text" name="name" placeholder="Введите ФИО" class="registration__input" id="name")
+      button.btn
+        span
+          | Подтвердить
+        .gradient
+
+    .popup.registration-popup
+      .popup-wrapper
+        .popup-container.popup-container__registration
+          button.popup-close
+          .registration-popup__title
+            | Совпадения:
+          form(action="post" method="/come" id="registration-form__come")
+            .popup__text
+              | 
+            button.btn
+              span
+                | Пришел
+              .gradient
+    .popup-overlay.popup-overlay__registration.hidden
+
+  script(src="javascripts/vendor.js")
+  script(src="javascripts/app.js")
+
+  script.
+    require('initialize');
