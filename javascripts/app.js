@@ -169,6 +169,10 @@ var _jqueryValidation2 = _interopRequireDefault(_jqueryValidation);
 
 require('jquery-validation/dist/additional-methods');
 
+var _userCard = require('./userCard');
+
+var _userCard2 = _interopRequireDefault(_userCard);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // fullpage
@@ -180,17 +184,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
   });
 });
 
-document.querySelector('.location__map-map').addEventListener('touchstart', function () {
-  _jquery2.default.fn.fullpage.setAllowScrolling(false);
-});
+if (document.querySelector('.location__map-map')) {
+  document.querySelector('.location__map-map').addEventListener('touchstart', function () {
+    _jquery2.default.fn.fullpage.setAllowScrolling(false);
+  });
 
-document.querySelector('.location__map-map').addEventListener('touchend', function () {
-  _jquery2.default.fn.fullpage.setAllowScrolling(true);
+  document.querySelector('.location__map-map').addEventListener('touchend', function () {
+    _jquery2.default.fn.fullpage.setAllowScrolling(true);
+  });
 }
 
 // popup
-
-);var formButton = (0, _jquery2.default)('.btn-come');
+var formButton = (0, _jquery2.default)('.btn-come');
 var popupButtonClose = (0, _jquery2.default)('.popup-close');
 var popupButtonLink = (0, _jquery2.default)('.btn-popup__link'
 
@@ -201,7 +206,7 @@ var popupButtonLink = (0, _jquery2.default)('.btn-popup__link'
       required: true
     },
     form__file: {
-      extension: 'png|jpg',
+      extension: 'png|jpg|jpeg',
       required: true
     }
   },
@@ -217,39 +222,67 @@ var popupButtonLink = (0, _jquery2.default)('.btn-popup__link'
   },
   submitHandler: function submitHandler(form) {
     var data = new FormData(form);
-    var imagefile = form.querySelector('.form__file');
-
     var config = { headers: { 'Content-Type': 'multipart/form-data' } };
 
-    var _iteratorNormalCompletion = true;
-    var _didIteratorError = false;
-    var _iteratorError = undefined;
-
-    try {
-      for (var _iterator = data.entries()[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
-        var pair = _step.value;
-
-        console.log(pair[0], pair[1]);
-      }
-    } catch (err) {
-      _didIteratorError = true;
-      _iteratorError = err;
-    } finally {
-      try {
-        if (!_iteratorNormalCompletion && _iterator.return) {
-          _iterator.return();
-        }
-      } finally {
-        if (_didIteratorError) {
-          throw _iteratorError;
-        }
-      }
-    }
-
     _axios2.default.post('http://localhost:3000/register', data, config).then(function (res) {
-      console.log(res.data);
+      if (res.data === 'success') {
+        (0, _jquery2.default)('.popup__text').text('Успешно!');
+        (0, _jquery2.default)('.popup').addClass('open-popup');
+      }
     }).catch(function (err) {
       console.log(err);
+    });
+  }
+});
+
+(0, _jquery2.default)("#registration-form").validate({
+  rules: {
+    name: {
+      required: true
+    }
+  },
+  messages: {
+    name: {
+      required: 'Введите ваше ФИО'
+    }
+  },
+  submitHandler: function submitHandler(form) {
+    var data = new FormData(form);
+    var feldData = data.get('name');
+
+    _axios2.default.post('http://localhost:3000/exist', { 'name': feldData }).then(function (res) {
+      if (res.data.exist === 'exist') {
+        (0, _jquery2.default)(".registration-item__content").remove();
+        (0, _userCard2.default)(res.data.currentUserModel);
+
+        (0, _jquery2.default)('.registration-popup').addClass('open-popup');
+        (0, _jquery2.default)('.popup-overlay__registration').removeClass('hidden');
+      }
+    }).catch(function (err) {
+      console.log(err);
+    });
+  }
+});
+
+(0, _jquery2.default)("#registration-form__come").validate({
+  rules: {
+    card: {
+      required: true
+    }
+  },
+  messages: {
+    card: {
+      required: ''
+    }
+  },
+  submitHandler: function submitHandler(form) {
+    var data = new FormData(form);
+    var feldData = data.get('card');
+
+    _axios2.default.post('http://localhost:3000/come', { 'name': feldData }).then(function (res) {
+      console.log(res);
+      (0, _jquery2.default)('.registration-popup').addClass('open-popup');
+      (0, _jquery2.default)('.popup-overlay__registration').removeClass('hidden');
     });
   }
 });
@@ -268,9 +301,21 @@ popupButtonClose.click(function () {
   }
 });
 
-// navigation
+(0, _jquery2.default)('.registration-popup').click(function (evt) {
+  var registrationPopup = document.querySelector('.registration-popup');
+  if (evt.target === registrationPopup) {
+    (0, _jquery2.default)('.popup').removeClass('open-popup');
+    (0, _jquery2.default)('.popup-overlay__registration').addClass('hidden');
+  }
+});
 
-(0, _jquery2.default)("#navToggle").click(function (evt) {
+(0, _jquery2.default)('.registration-popup .popup-close').click(function () {
+  (0, _jquery2.default)('.popup').removeClass('open-popup');
+  (0, _jquery2.default)('.popup-overlay__registration').addClass('hidden');
+}
+
+// navigation
+);(0, _jquery2.default)("#navToggle").click(function (evt) {
   evt.stopPropagation();
   (0, _jquery2.default)(this).toggleClass("active");
   (0, _jquery2.default)(".main-nav-overlay").toggleClass("open");
@@ -340,6 +385,29 @@ links.each(function (a, link) {
 (0, _jquery2.default)(window).resize(function () {
   (0, _jquery2.default)(".file_upload input").triggerHandler("change");
 });
+
+});
+
+require.register("userCard.js", function(exports, require, module) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var userCards = function userCards(data) {
+  _jquery2.default.each(data, function (index, value) {
+    (0, _jquery2.default)('.popup__text').append('<div class="registration-item__content registration-item__content-' + (value.come === false ? 'success' : 'error') + '">\n        <img src="' + value.path + '" class="registration-item__img">\n        <div class="registration-item__text">\n          <label class="registration-item__text-label">\n            <input class="registration-item__text-input ' + (value.come === false ? '' : 'hidden') + '" type="radio" name="card" value="' + value._id + '">\n            <div class="registration-item__text-name">\n              ' + value.name + '\n            </div>\n          </label>\n        </div>\n        <div class="registration-item__status-wrapper">\n          <div class="registration-item__status">\n          ' + (value.come === false ? 'Не пришел' : 'Пришел') + '\n          </div>\n        </div>\n      </div>\n    </div>');
+  });
+};
+
+exports.default = userCards;
 
 });
 
