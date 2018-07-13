@@ -213,7 +213,7 @@ $(function(){
 
 			if( lbl.is( ":visible" ) ){
 					lbl.text( file_name );
-					btn.text( "Выбрать" );
+					btn.text( "Прикрепить фото" );
 			}else
 					btn.text( file_name );
 	}).change();

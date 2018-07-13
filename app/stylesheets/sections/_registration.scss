@@ -27,7 +27,6 @@
   width: 100%;
   margin: 0 auto;
 
-
   text-align: center;
 }
 
@@ -92,7 +91,7 @@
   background-size: contain;
 } 
 
-.file_upload{
+.file_upload {
   position: relative;
   display: block;
   margin-top: 15px;
@@ -100,14 +99,14 @@
 
   position: relative;
   
-  font-size: 1em;              
-  height: 2em;                 
+  font-size: 18px;              
+  height: 2.2em;                 
   line-height: 2em     
 
 }
 .file_upload .button, .file_upload > mark{
   display: block;
-  cursor: pointer              /* example */
+  cursor: pointer;
 }
 .file_upload .button{
   display: flex;
@@ -115,17 +114,19 @@
   justify-content: center;
 
   float: right;
+  padding-left: 7px;
+  padding-right: 7px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
-  width: 8em;                  /* example */
+
   height: 100%;
-  text-align: center           /* example */
+  text-align: center           
 }
 .file_upload > mark{
-  background: transparent;     /* example */
-  padding-left: 1em            /* example */
+  background: transparent;     
+  padding-left: 1em            
 }
-@media only screen and ( max-width: 500px ){  /* example */
+@media only screen and ( max-width: 500px ){
   .file_upload > mark{
       display: none
   }

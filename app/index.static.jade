@@ -45,10 +45,10 @@ body
           .registration__input-wrapper
             input(class="form__file" type='file' name="form__file" id="form__file")
             label.file_upload(for="form__file")
-              span.button Выбрать
+              span.button Прикрепить фото
               mark Ваше фото
           .registration-form__label-description
-            | * фото хорошего качества, не темное, портретного вида
+            | * наличие фото обязательно, фото хорошего качества, не темное, портретного вида
           .registration__input-wrapper
             input(type="text" name="form__surname" placeholder="Введите ФИО" class="registration__input" id="surname")
           .registration-form__label-description
@@ -79,6 +79,10 @@ body
                 span.location__data-time-after
                   = ' '
                   | 19:00
+            .location__data-address
+              |  <span>Адрес:</span> проспект Шолохова 316,<br /> развлекательный комплекс <br /> "Старый город"
+            .location__data-description
+              | * пропуск на территорию <br /> осуществляется строго с 18:00
           .location__map
             a(href="./images/map.png" data-fancybox).location__map-link
             script(src='https://maps.googleapis.com/maps/api/js?key=AIzaSyByUg22uv5jdTNNL6lD50kut7Lyt8QAB0A')
@@ -87,8 +91,7 @@ body
               style.
                 #gmap_canvas img{max-width:none!important;background:none!important}
             script(type='text/javascript').
-            
-              function init_map(){var myOptions = {zoom:15,center:new google.maps.LatLng(47.273204,39.82210199999997),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(47.273204,39.82210199999997)});infowindow = new google.maps.InfoWindow({content:'<strong>проспект Шолохова 316, развлекательный комплекс "Старый город"</strong><br>Ростов-на-Дону, Шолохова 316<br>'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);
+              function init_map(){var myOptions = {zoom:15,center:new google.maps.LatLng(47.273204,39.82210199999997),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(47.273204,39.82210199999997)});infowindow = new google.maps.InfoWindow({content:'Ростов-на-Дону, Шолохова 316'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);
             .location__map-text
               | Вся информация о трансфере будет вам выслана дополнительно
 

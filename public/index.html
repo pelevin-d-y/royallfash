@@ -40,11 +40,11 @@
         <form action="/register" enctype="multipart/form-data" method="post" id="form" class="registration-form">
           <div class="registration__input-wrapper">
             <input type="file" name="form__file" id="form__file" class="form__file">
-            <label for="form__file" class="file_upload"><span class="button">Выбрать</span>
+            <label for="form__file" class="file_upload"><span class="button">Прикрепить фото</span>
               <mark>Ваше фото</mark>
             </label>
           </div>
-          <div class="registration-form__label-description">* фото хорошего качества, не темное, портретного вида</div>
+          <div class="registration-form__label-description">* наличие фото обязательно, фото хорошего качества, не темное, портретного вида</div>
           <div class="registration__input-wrapper">
             <input type="text" name="form__surname" placeholder="Введите ФИО" id="surname" class="registration__input">
           </div>
@@ -64,6 +64,8 @@
             <div class="location__data-time">сбор гостей<br>
               <div class="location__data-time-div">с<span class="location__data-time-before"> 18:00 </span>до<span class="location__data-time-after"> 19:00</span></div>
             </div>
+            <div class="location__data-address"> <span>Адрес:</span> проспект Шолохова 316,<br /> развлекательный комплекс <br /> "Старый город"</div>
+            <div class="location__data-description">* пропуск на территорию <br /> осуществляется строго с 18:00</div>
           </div>
           <div class="location__map"><a href="./images/map.png" data-fancybox class="location__map-link"></a>
             <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyByUg22uv5jdTNNL6lD50kut7Lyt8QAB0A"></script>
@@ -71,7 +73,7 @@
               <div id="gmap_canvas"></div>
               <style>#gmap_canvas img{max-width:none!important;background:none!important}</style>
             </div>
-            <script type="text/javascript">function init_map(){var myOptions = {zoom:15,center:new google.maps.LatLng(47.273204,39.82210199999997),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(47.273204,39.82210199999997)});infowindow = new google.maps.InfoWindow({content:'<strong>проспект Шолохова 316, развлекательный комплекс "Старый город"</strong><br>Ростов-на-Дону, Шолохова 316<br>'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);</script>
+            <script type="text/javascript">function init_map(){var myOptions = {zoom:15,center:new google.maps.LatLng(47.273204,39.82210199999997),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(47.273204,39.82210199999997)});infowindow = new google.maps.InfoWindow({content:'Ростов-на-Дону, Шолохова 316'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);</script>
             <div class="location__map-text">Вся информация о трансфере будет вам выслана дополнительно</div>
           </div>
         </div>
