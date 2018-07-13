@@ -8972,6 +8972,11 @@ li.fancybox-thumbs-loading {
     margin-bottom: 20px;
     max-width: 90%; } }
 
+@media (max-width: 400px) {
+  .img {
+    margin-bottom: 17px;
+    max-width: 88%; } }
+
 .main-nav-overlay {
   position: relative;
   z-index: 10; }
@@ -9239,7 +9244,7 @@ p {
   .location__text span {
     font-size: 23px; }
   .location__data-address {
-    margin-top: 7px;
+    margin-top: 3px;
     text-transform: none; }
   .location__data-address span {
     font-size: 14px; }
@@ -9251,7 +9256,9 @@ p {
 
 @media (max-width: 400px) {
   #gmap_canvas {
-    height: 200px; } }
+    height: 190px; }
+  .location__data-description {
+    margin-top: 3px; } }
 
 .dress-code {
   display: flex;
