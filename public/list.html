@@ -13,7 +13,7 @@
     <div class="registration__title registration__title-list">Введите пожалуйста вашу фамилию, имя, отчество</div>
     <form action="/exist" method="post" id="registration-form" class="registration-form">
       <div class="registration__input-wrapper">
-        <input type="text" name="name" placeholder="Введите ФИО" id="name" class="registration__input">
+        <input type="text" name="name" placeholder="Введите ФИО" value="" id="name" class="registration__input">
       </div>
       <button class="btn"><span>Подтвердить</span>
         <div class="gradient"></div>
@@ -25,17 +25,29 @@
           <button class="popup-close"></button>
           <div class="registration-popup__title">Совпадения:</div>
           <form action="post" method="/come" id="registration-form__come">
-            <div class="popup__text"> </div>
-            <button class="btn"><span>Пришел</span>
+            <div class="popup__text-registration"> </div>
+            <button class="btn registration-popup__btn-come"><span>Пришел</span>
               <div class="gradient"></div>
             </button>
           </form>
         </div>
       </div>
     </div>
+    <div class="popup registration-popup__success">
+      <div class="popup-overlay">
+        <div class="popup-container">
+          <button class="popup-close"></button>
+          <div class="popup__text">Успешно!</div>
+          <button class="btn btn-popup__link"><span>Закрыть</span>
+            <div class="gradient"></div>
+          </button>
+        </div>
+      </div>
+    </div>
     <div class="popup-overlay popup-overlay__registration hidden"></div>
   </div>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="javascripts/vendor.js"></script>
   <script src="javascripts/app.js"></script>
-  <script>require('initialize');</script>
+  <script>require('list');</script>
 </body>

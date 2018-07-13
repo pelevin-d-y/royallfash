@@ -13,7 +13,7 @@ body
       | Введите пожалуйста вашу фамилию, имя, отчество
     form(action="/exist" method="post" id="registration-form").registration-form
       .registration__input-wrapper
-        input(type="text" name="name" placeholder="Введите ФИО" class="registration__input" id="name")
+        input(type="text" name="name" placeholder="Введите ФИО" value='' class="registration__input" id="name")
       button.btn
         span
           | Подтвердить
@@ -26,16 +26,27 @@ body
           .registration-popup__title
             | Совпадения:
           form(action="post" method="/come" id="registration-form__come")
-            .popup__text
+            .popup__text-registration
               | 
-            button.btn
+            button.btn.registration-popup__btn-come
               span
                 | Пришел
               .gradient
+    .popup.registration-popup__success
+      .popup-overlay
+        .popup-container
+          button.popup-close
+          .popup__text
+            | Успешно!
+          button.btn.btn-popup__link
+              span
+                | Закрыть
+              .gradient
     .popup-overlay.popup-overlay__registration.hidden
 
+  script(src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js")
   script(src="javascripts/vendor.js")
   script(src="javascripts/app.js")
 
   script.
-    require('initialize');
+    require('list');

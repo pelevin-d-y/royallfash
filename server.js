@@ -27,6 +27,7 @@ mongoose.connect("mongodb://localhost:27017/users").then(() => {
     return res.send('success')
   })
   app.post('/exist', (req, res) => {
+    console.log(req.body)
      return mongooseUserModel.find({ 'name': req.body.name }, (err, currentUserModel) => {
       if (err) return console.log(err)
       if (currentUserModel) {
@@ -38,11 +39,17 @@ mongoose.connect("mongodb://localhost:27017/users").then(() => {
   })
 
   app.post('/come', (req, res) => {
-    console.log('req.body', req.body)
     return mongooseUserModel.update({ _id: req.body.name }, { $set: { come: true }}, (err, model) => {
       if (err) return console.log('update', err)
       return res.send(model)
     });
+  })
+
+  app.get('/fullnames', (req, res) => {
+    console.log('req.body fullname', req.body)
+    return mongooseUserModel.find({}, (err, currentUserModel) => {
+      res.send(currentUserModel)
+    })
   })
 });
 

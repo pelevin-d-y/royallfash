@@ -20,6 +20,7 @@
     "font-awesome": "^4.7.0",
     "fullpage.js": "^2.9.5",
     "jaded-brunch": "^2.2.6",
+    "jquery-autocomplete": "^1.2.8",
     "jquery-validation": "^1.17.0",
     "mongodb": "^3.1.1",
     "mongoose": "^5.2.2",

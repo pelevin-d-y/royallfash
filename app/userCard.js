@@ -2,7 +2,7 @@ import $ from "jquery"
 
 const userCards = (data) => {
   $.each(data, function(index, value) {
-    $('.popup__text').append(`<div class="registration-item__content registration-item__content-${(value.come === false) ? 'success' : 'error'}">
+    $('.popup__text-registration').append(`<div class="registration-item__content registration-item__content-${(value.come === false) ? 'success' : 'error'}">
         <img src="${value.path}" class="registration-item__img">
         <div class="registration-item__text">
           <label class="registration-item__text-label">
