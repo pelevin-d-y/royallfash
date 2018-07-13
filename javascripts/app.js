@@ -169,9 +169,7 @@ var _jqueryValidation2 = _interopRequireDefault(_jqueryValidation);
 
 require('jquery-validation/dist/additional-methods');
 
-var _userCard = require('./userCard');
-
-var _userCard2 = _interopRequireDefault(_userCard);
+require('./list.js');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -195,7 +193,6 @@ if (document.querySelector('.location__map-map')) {
 }
 
 // popup
-var formButton = (0, _jquery2.default)('.btn-come');
 var popupButtonClose = (0, _jquery2.default)('.popup-close');
 var popupButtonLink = (0, _jquery2.default)('.btn-popup__link'
 
@@ -235,58 +232,6 @@ var popupButtonLink = (0, _jquery2.default)('.btn-popup__link'
   }
 });
 
-(0, _jquery2.default)("#registration-form").validate({
-  rules: {
-    name: {
-      required: true
-    }
-  },
-  messages: {
-    name: {
-      required: 'Введите ваше ФИО'
-    }
-  },
-  submitHandler: function submitHandler(form) {
-    var data = new FormData(form);
-    var feldData = data.get('name');
-
-    _axios2.default.post('http://localhost:3000/exist', { 'name': feldData }).then(function (res) {
-      if (res.data.exist === 'exist') {
-        (0, _jquery2.default)(".registration-item__content").remove();
-        (0, _userCard2.default)(res.data.currentUserModel);
-
-        (0, _jquery2.default)('.registration-popup').addClass('open-popup');
-        (0, _jquery2.default)('.popup-overlay__registration').removeClass('hidden');
-      }
-    }).catch(function (err) {
-      console.log(err);
-    });
-  }
-});
-
-(0, _jquery2.default)("#registration-form__come").validate({
-  rules: {
-    card: {
-      required: true
-    }
-  },
-  messages: {
-    card: {
-      required: ''
-    }
-  },
-  submitHandler: function submitHandler(form) {
-    var data = new FormData(form);
-    var feldData = data.get('card');
-
-    _axios2.default.post('http://localhost:3000/come', { 'name': feldData }).then(function (res) {
-      console.log(res);
-      (0, _jquery2.default)('.registration-popup').addClass('open-popup');
-      (0, _jquery2.default)('.popup-overlay__registration').removeClass('hidden');
-    });
-  }
-});
-
 popupButtonLink.click(function () {
   (0, _jquery2.default)('.popup').removeClass('open-popup');
 });
@@ -301,21 +246,8 @@ popupButtonClose.click(function () {
   }
 });
 
-(0, _jquery2.default)('.registration-popup').click(function (evt) {
-  var registrationPopup = document.querySelector('.registration-popup');
-  if (evt.target === registrationPopup) {
-    (0, _jquery2.default)('.popup').removeClass('open-popup');
-    (0, _jquery2.default)('.popup-overlay__registration').addClass('hidden');
-  }
-});
-
-(0, _jquery2.default)('.registration-popup .popup-close').click(function () {
-  (0, _jquery2.default)('.popup').removeClass('open-popup');
-  (0, _jquery2.default)('.popup-overlay__registration').addClass('hidden');
-}
-
 // navigation
-);(0, _jquery2.default)("#navToggle").click(function (evt) {
+(0, _jquery2.default)("#navToggle").click(function (evt) {
   evt.stopPropagation();
   (0, _jquery2.default)(this).toggleClass("active");
   (0, _jquery2.default)(".main-nav-overlay").toggleClass("open");
@@ -335,10 +267,6 @@ links.each(function (a, link) {
 // next code
 
 );(0, _jquery2.default)('.container').click(function (evt) {
-  evt.stopPropagation();
-});
-
-(0, _jquery2.default)('.filter').click(function (evt) {
   evt.stopPropagation();
 });
 
@@ -388,6 +316,161 @@ links.each(function (a, link) {
 
 });
 
+require.register("list.js", function(exports, require, module) {
+'use strict';
+
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+var _axios = require('axios');
+
+var _axios2 = _interopRequireDefault(_axios);
+
+var _jqueryValidation = require('jquery-validation');
+
+var _jqueryValidation2 = _interopRequireDefault(_jqueryValidation);
+
+var _userCard = require('./userCard');
+
+var _userCard2 = _interopRequireDefault(_userCard);
+
+var _jqueryAutocomplete = require('jquery-autocomplete');
+
+var _jqueryAutocomplete2 = _interopRequireDefault(_jqueryAutocomplete);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+(0, _jquery2.default)("#registration-form").validate({
+  rules: {
+    name: {
+      required: true
+    }
+  },
+  messages: {
+    name: {
+      required: 'Введите ваше ФИО'
+    }
+  },
+  submitHandler: function submitHandler(form) {
+    var data = new FormData(form);
+    var fieldData = data.get('name');
+
+    _axios2.default.post('http://localhost:3000/exist', { 'name': fieldData }).then(function (res) {
+      if (res.data.exist === 'exist') {
+        (0, _jquery2.default)(".registration-item__content").remove();
+        (0, _userCard2.default)(res.data.currentUserModel);
+        var currentUsersCome = (0, _jquery2.default)('#registration-form__come .registration-item__content-success ').length;
+        var popupBtnComeText = (0, _jquery2.default)('.registration-popup__btn-come span');
+        if (!currentUsersCome) {
+          popupBtnComeText.text('Закрыть');
+        } else {
+          popupBtnComeText.text('Пришел');
+        }
+
+        (0, _jquery2.default)('.registration-popup').addClass('open-popup');
+        (0, _jquery2.default)('.popup-overlay__registration').removeClass('hidden');
+      }
+    }).catch(function (err) {
+      console.log(err);
+    });
+  }
+});
+
+(0, _jquery2.default)("#registration-form__come").validate({
+  rules: {
+    card: {
+      required: true
+    }
+  },
+  messages: {
+    card: {
+      required: ''
+    }
+  },
+  submitHandler: function submitHandler(form) {
+    var data = new FormData(form);
+    var fieldData = data.get('card');
+
+    _axios2.default.post('http://localhost:3000/come', { 'name': fieldData }).then(function (res) {
+      var popupBtnComeText = (0, _jquery2.default)('.registration-popup__btn-come span');
+      if (popupBtnComeText.text() === 'Закрыть') {
+        (0, _jquery2.default)('.registration-popup').removeClass('open-popup');
+        (0, _jquery2.default)('.popup-overlay__registration').addClass('hidden');
+        document.querySelector('#registration-form .registration__input ').value = '';
+      } else {
+        (0, _jquery2.default)('.registration-popup').removeClass('open-popup');
+        (0, _jquery2.default)('.popup-overlay__registration').addClass('hidden');
+        (0, _jquery2.default)('.registration-popup__success').addClass('open-popup');
+        document.querySelector('#registration-form .registration__input ').value = '';
+      }
+    }).catch(function (err) {
+      console.log(err);
+    });
+  }
+});
+
+var popupButtonClose = (0, _jquery2.default)('.popup-close');
+var popupButtonLink = (0, _jquery2.default)('.btn-popup__link');
+
+popupButtonLink.click(function () {
+  (0, _jquery2.default)('.popup').removeClass('open-popup');
+});
+
+popupButtonClose.click(function () {
+  (0, _jquery2.default)('.popup').removeClass('open-popup');
+});
+
+(0, _jquery2.default)('.registration-popup').click(function (evt) {
+  var registrationPopup = document.querySelector('.registration-popup');
+  if (evt.target === registrationPopup) {
+    (0, _jquery2.default)('.popup').removeClass('open-popup');
+    (0, _jquery2.default)('.popup-overlay__registration').addClass('hidden');
+  }
+});
+
+(0, _jquery2.default)('.registration-popup .popup-close').click(function () {
+  (0, _jquery2.default)('.popup').removeClass('open-popup');
+  (0, _jquery2.default)('.popup-overlay__registration').addClass('hidden');
+});
+
+(0, _jquery2.default)('.popup-overlay').click(function (evt) {
+  if ((0, _jquery2.default)(evt.target).closest('.popup-container').length == 0) {
+    (0, _jquery2.default)('.popup').removeClass('open-popup');
+  }
+});
+
+// autocomplete
+
+
+var autocompleteInput = (0, _jquery2.default)('#registration-form .registration__input');
+
+_axios2.default.get('http://localhost:3000/fullnames').then(function (res) {
+  var autocompleteArray = [];
+
+  res.data.forEach(function (element) {
+    autocompleteArray.push(element.name);
+  });
+
+  var filtredAutocompliteArray = [];
+  autocompleteArray.forEach(function (element) {
+
+    autocompleteArray.forEach(function (someElement) {
+      if (element === someElement) {
+        filtredAutocompliteArray.push(element);
+      }
+    });
+  });
+  console.log(filtredAutocompliteArray);
+}
+
+// let FullNameArray = dataList.map((element) => {
+//   return element['ФИО'];
+// })
+);
+
+});
+
 require.register("userCard.js", function(exports, require, module) {
 'use strict';
 
@@ -403,7 +486,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var userCards = function userCards(data) {
   _jquery2.default.each(data, function (index, value) {
-    (0, _jquery2.default)('.popup__text').append('<div class="registration-item__content registration-item__content-' + (value.come === false ? 'success' : 'error') + '">\n        <img src="' + value.path + '" class="registration-item__img">\n        <div class="registration-item__text">\n          <label class="registration-item__text-label">\n            <input class="registration-item__text-input ' + (value.come === false ? '' : 'hidden') + '" type="radio" name="card" value="' + value._id + '">\n            <div class="registration-item__text-name">\n              ' + value.name + '\n            </div>\n          </label>\n        </div>\n        <div class="registration-item__status-wrapper">\n          <div class="registration-item__status">\n          ' + (value.come === false ? 'Не пришел' : 'Пришел') + '\n          </div>\n        </div>\n      </div>\n    </div>');
+    (0, _jquery2.default)('.popup__text-registration').append('<div class="registration-item__content registration-item__content-' + (value.come === false ? 'success' : 'error') + '">\n        <img src="' + value.path + '" class="registration-item__img">\n        <div class="registration-item__text">\n          <label class="registration-item__text-label">\n            <input class="registration-item__text-input ' + (value.come === false ? '' : 'hidden') + '" type="radio" name="card" value="' + value._id + '">\n            <div class="registration-item__text-name">\n              ' + value.name + '\n            </div>\n          </label>\n        </div>\n        <div class="registration-item__status-wrapper">\n          <div class="registration-item__status">\n          ' + (value.come === false ? 'Не пришел' : 'Пришел') + '\n          </div>\n        </div>\n      </div>\n    </div>');
   });
 };
 
