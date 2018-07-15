@@ -148,6 +148,149 @@ var __makeRelativeRequire = function(require, mappings, pref) {
     return require(name);
   }
 };
+require.register("helpers/comePost.js", function(exports, require, module) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function () {
+  var popupBtnComeText = $('.registration-popup__btn-come span');
+  if (popupBtnComeText.text() === 'Закрыть') {
+    $('.registration-popup').removeClass('open-popup');
+    $('.popup-overlay__registration').addClass('hidden');
+    document.querySelector('#registration-form .registration__input ').value = '';
+  } else {
+    $('.registration-popup').removeClass('open-popup');
+    $('.popup-overlay__registration').addClass('hidden');
+    $('.registration-popup__success').addClass('open-popup');
+    document.querySelector('#registration-form .registration__input ').value = '';
+  }
+};
+
+});
+
+require.register("helpers/customFileInput.js", function(exports, require, module) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _jquery = require("jquery");
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function () {
+    (0, _jquery2.default)(function () {
+        var wrapper = (0, _jquery2.default)(".file_upload"),
+            btn = wrapper.find(".button"),
+            lbl = wrapper.find("mark");
+        var inp = (0, _jquery2.default)("#form__file");
+
+        // Crutches for the :focus style:
+        inp.focus(function () {
+            wrapper.addClass("focus");
+        }).blur(function () {
+            wrapper.removeClass("focus");
+        });
+
+        var file_api = window.File && window.FileReader && window.FileList && window.Blob ? true : false;
+
+        inp.change(function () {
+            var file_name;
+            if (file_api && inp[0].files[0]) file_name = inp[0].files[0].name;else file_name = inp.val().replace("C:\\fakepath\\", '');
+
+            if (!file_name.length) return;
+
+            if (lbl.is(":visible")) {
+                lbl.text(file_name);
+                btn.text("Прикрепить фото");
+            } else btn.text(file_name);
+        }).change();
+    });
+    (0, _jquery2.default)(window).resize(function () {
+        (0, _jquery2.default)(".file_upload input").triggerHandler("change");
+    });
+};
+
+});
+
+require.register("helpers/existPost.js", function(exports, require, module) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _userCard = require('./userCard');
+
+var _userCard2 = _interopRequireDefault(_userCard);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (res) {
+  $(".registration-item__content").remove();
+  (0, _userCard2.default)(res.data.currentUserModel);
+  var currentUsersCome = $('#registration-form__come .registration-item__content-success ').length;
+  var popupBtnComeText = $('.registration-popup__btn-come span');
+  if (!currentUsersCome) {
+    popupBtnComeText.text('Закрыть');
+  } else {
+    popupBtnComeText.text('Пришел');
+  }
+
+  $('.registration-popup').addClass('open-popup');
+  $('.popup-overlay__registration').removeClass('hidden');
+};
+
+});
+
+require.register("helpers/unique.js", function(exports, require, module) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var unique = function unique(arr) {
+  var obj = {};
+  arr.forEach(function (element) {
+    var str = element;
+    obj[str] = true; // запомнить строку в виде свойства объекта
+  });
+  return Object.keys(obj);
+};
+
+exports.default = unique;
+
+});
+
+require.register("helpers/userCard.js", function(exports, require, module) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var userCards = function userCards(data) {
+  _jquery2.default.each(data, function (index, value) {
+    (0, _jquery2.default)('.popup__text-registration').append('<div class="registration-item__content registration-item__content-' + (value.come === false ? 'success' : 'error') + '">\n        <img src="' + value.path + '" class="registration-item__img">\n        <div class="registration-item__text">\n          <label class="registration-item__text-label">\n            <input class="registration-item__text-input ' + (value.come === false ? '' : 'hidden') + '" type="radio" name="card" value="' + value._id + '">\n            <div class="registration-item__text-name">\n              ' + value.name + '\n            </div>\n          </label>\n        </div>\n        <div class="registration-item__status-wrapper">\n          <div class="registration-item__status">\n          ' + (value.come === false ? 'Не пришел' : 'Пришел') + '\n          </div>\n        </div>\n      </div>\n    </div>');
+  });
+};
+
+exports.default = userCards;
+
+});
+
 require.register("initialize.js", function(exports, require, module) {
 'use strict';
 
@@ -171,6 +314,10 @@ require('jquery-validation/dist/additional-methods');
 
 require('./list.js');
 
+var _customFileInput = require('./helpers/customFileInput');
+
+var _customFileInput2 = _interopRequireDefault(_customFileInput);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // fullpage
@@ -192,7 +339,6 @@ if (document.querySelector('.location__map-map')) {
   });
 }
 
-// popup
 var popupButtonClose = (0, _jquery2.default)('.popup-close');
 var popupButtonLink = (0, _jquery2.default)('.btn-popup__link'
 
@@ -264,9 +410,12 @@ links.each(function (a, link) {
   });
 }
 
+// file input
+);(0, _customFileInput2.default
+
 // next code
 
-);(0, _jquery2.default)('.container').click(function (evt) {
+)();(0, _jquery2.default)('.container').click(function (evt) {
   evt.stopPropagation();
 });
 
@@ -280,38 +429,6 @@ links.each(function (a, link) {
 
 (0, _jquery2.default)('.popup').click(function (evt) {
   evt.stopPropagation();
-}
-
-// file
-);(0, _jquery2.default)(function () {
-  var wrapper = (0, _jquery2.default)(".file_upload"),
-      btn = wrapper.find(".button"),
-      lbl = wrapper.find("mark");
-  var inp = (0, _jquery2.default)("#form__file");
-
-  // Crutches for the :focus style:
-  inp.focus(function () {
-    wrapper.addClass("focus");
-  }).blur(function () {
-    wrapper.removeClass("focus");
-  });
-
-  var file_api = window.File && window.FileReader && window.FileList && window.Blob ? true : false;
-
-  inp.change(function () {
-    var file_name;
-    if (file_api && inp[0].files[0]) file_name = inp[0].files[0].name;else file_name = inp.val().replace("C:\\fakepath\\", '');
-
-    if (!file_name.length) return;
-
-    if (lbl.is(":visible")) {
-      lbl.text(file_name);
-      btn.text("Прикрепить фото");
-    } else btn.text(file_name);
-  }).change();
-});
-(0, _jquery2.default)(window).resize(function () {
-  (0, _jquery2.default)(".file_upload input").triggerHandler("change");
 });
 
 });
@@ -331,17 +448,46 @@ var _jqueryValidation = require('jquery-validation');
 
 var _jqueryValidation2 = _interopRequireDefault(_jqueryValidation);
 
-var _userCard = require('./userCard');
-
-var _userCard2 = _interopRequireDefault(_userCard);
-
 var _jqueryAutocomplete = require('jquery-autocomplete');
 
 var _jqueryAutocomplete2 = _interopRequireDefault(_jqueryAutocomplete);
 
+var _unique = require('./helpers/unique');
+
+var _unique2 = _interopRequireDefault(_unique);
+
+var _existPost = require('./helpers/existPost');
+
+var _existPost2 = _interopRequireDefault(_existPost);
+
+var _comePost = require('./helpers/comePost');
+
+var _comePost2 = _interopRequireDefault(_comePost);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-(0, _jquery2.default)("#registration-form").validate({
+// autocomplete
+
+var autocompleteInput = jQuery('#registration-form .registration__input');
+
+_axios2.default.get('http://localhost:3000/fullnames').then(function (res) {
+  var autocompleteArray = [];
+  res.data.forEach(function (element) {
+    autocompleteArray.push(element.name);
+  });
+  var uniqueAutocompleteArray = (0, _unique2.default)(autocompleteArray);
+
+  autocompleteInput.autocomplete({
+    source: [uniqueAutocompleteArray],
+    limit: 20,
+    visibleLimit: 6,
+    showHint: false
+  }, 4000);
+}
+
+// validation
+
+);(0, _jquery2.default)("#registration-form").validate({
   rules: {
     name: {
       required: true
@@ -358,18 +504,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
     _axios2.default.post('http://localhost:3000/exist', { 'name': fieldData }).then(function (res) {
       if (res.data.exist === 'exist') {
-        (0, _jquery2.default)(".registration-item__content").remove();
-        (0, _userCard2.default)(res.data.currentUserModel);
-        var currentUsersCome = (0, _jquery2.default)('#registration-form__come .registration-item__content-success ').length;
-        var popupBtnComeText = (0, _jquery2.default)('.registration-popup__btn-come span');
-        if (!currentUsersCome) {
-          popupBtnComeText.text('Закрыть');
-        } else {
-          popupBtnComeText.text('Пришел');
-        }
-
-        (0, _jquery2.default)('.registration-popup').addClass('open-popup');
-        (0, _jquery2.default)('.popup-overlay__registration').removeClass('hidden');
+        (0, _existPost2.default)(res);
       }
     }).catch(function (err) {
       console.log(err);
@@ -393,24 +528,15 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
     var fieldData = data.get('card');
 
     _axios2.default.post('http://localhost:3000/come', { 'name': fieldData }).then(function (res) {
-      var popupBtnComeText = (0, _jquery2.default)('.registration-popup__btn-come span');
-      if (popupBtnComeText.text() === 'Закрыть') {
-        (0, _jquery2.default)('.registration-popup').removeClass('open-popup');
-        (0, _jquery2.default)('.popup-overlay__registration').addClass('hidden');
-        document.querySelector('#registration-form .registration__input ').value = '';
-      } else {
-        (0, _jquery2.default)('.registration-popup').removeClass('open-popup');
-        (0, _jquery2.default)('.popup-overlay__registration').addClass('hidden');
-        (0, _jquery2.default)('.registration-popup__success').addClass('open-popup');
-        document.querySelector('#registration-form .registration__input ').value = '';
-      }
+      (0, _comePost2.default)();
     }).catch(function (err) {
       console.log(err);
     });
   }
-});
+}
 
-var popupButtonClose = (0, _jquery2.default)('.popup-close');
+// popups
+);var popupButtonClose = (0, _jquery2.default)('.popup-close');
 var popupButtonLink = (0, _jquery2.default)('.btn-popup__link');
 
 popupButtonLink.click(function () {
@@ -439,58 +565,6 @@ popupButtonClose.click(function () {
     (0, _jquery2.default)('.popup').removeClass('open-popup');
   }
 });
-
-// autocomplete
-
-
-var autocompleteInput = (0, _jquery2.default)('#registration-form .registration__input');
-
-_axios2.default.get('http://localhost:3000/fullnames').then(function (res) {
-  var autocompleteArray = [];
-
-  res.data.forEach(function (element) {
-    autocompleteArray.push(element.name);
-  });
-
-  var filtredAutocompliteArray = [];
-  autocompleteArray.forEach(function (element) {
-
-    autocompleteArray.forEach(function (someElement) {
-      if (element === someElement) {
-        filtredAutocompliteArray.push(element);
-      }
-    });
-  });
-  console.log(filtredAutocompliteArray);
-}
-
-// let FullNameArray = dataList.map((element) => {
-//   return element['ФИО'];
-// })
-);
-
-});
-
-require.register("userCard.js", function(exports, require, module) {
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _jquery = require('jquery');
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var userCards = function userCards(data) {
-  _jquery2.default.each(data, function (index, value) {
-    (0, _jquery2.default)('.popup__text-registration').append('<div class="registration-item__content registration-item__content-' + (value.come === false ? 'success' : 'error') + '">\n        <img src="' + value.path + '" class="registration-item__img">\n        <div class="registration-item__text">\n          <label class="registration-item__text-label">\n            <input class="registration-item__text-input ' + (value.come === false ? '' : 'hidden') + '" type="radio" name="card" value="' + value._id + '">\n            <div class="registration-item__text-name">\n              ' + value.name + '\n            </div>\n          </label>\n        </div>\n        <div class="registration-item__status-wrapper">\n          <div class="registration-item__status">\n          ' + (value.come === false ? 'Не пришел' : 'Пришел') + '\n          </div>\n        </div>\n      </div>\n    </div>');
-  });
-};
-
-exports.default = userCards;
 
 });
 
