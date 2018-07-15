@@ -148,107 +148,6 @@ var __makeRelativeRequire = function(require, mappings, pref) {
     return require(name);
   }
 };
-require.register("helpers/comePost.js", function(exports, require, module) {
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-exports.default = function () {
-  var popupBtnComeText = $('.registration-popup__btn-come span');
-  if (popupBtnComeText.text() === 'Закрыть') {
-    $('.registration-popup').removeClass('open-popup');
-    $('.popup-overlay__registration').addClass('hidden');
-    document.querySelector('#registration-form .registration__input ').value = '';
-  } else {
-    $('.registration-popup').removeClass('open-popup');
-    $('.popup-overlay__registration').addClass('hidden');
-    $('.registration-popup__success').addClass('open-popup');
-    document.querySelector('#registration-form .registration__input ').value = '';
-  }
-};
-
-});
-
-require.register("helpers/customFileInput.js", function(exports, require, module) {
-"use strict";
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _jquery = require("jquery");
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function () {
-    (0, _jquery2.default)(function () {
-        var wrapper = (0, _jquery2.default)(".file_upload"),
-            btn = wrapper.find(".button"),
-            lbl = wrapper.find("mark");
-        var inp = (0, _jquery2.default)("#form__file");
-
-        // Crutches for the :focus style:
-        inp.focus(function () {
-            wrapper.addClass("focus");
-        }).blur(function () {
-            wrapper.removeClass("focus");
-        });
-
-        var file_api = window.File && window.FileReader && window.FileList && window.Blob ? true : false;
-
-        inp.change(function () {
-            var file_name;
-            if (file_api && inp[0].files[0]) file_name = inp[0].files[0].name;else file_name = inp.val().replace("C:\\fakepath\\", '');
-
-            if (!file_name.length) return;
-
-            if (lbl.is(":visible")) {
-                lbl.text(file_name);
-                btn.text("Прикрепить фото");
-            } else btn.text(file_name);
-        }).change();
-    });
-    (0, _jquery2.default)(window).resize(function () {
-        (0, _jquery2.default)(".file_upload input").triggerHandler("change");
-    });
-};
-
-});
-
-require.register("helpers/existPost.js", function(exports, require, module) {
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _userCard = require('./userCard');
-
-var _userCard2 = _interopRequireDefault(_userCard);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function (res) {
-  $(".registration-item__content").remove();
-  (0, _userCard2.default)(res.data.currentUserModel);
-  var currentUsersCome = $('#registration-form__come .registration-item__content-success ').length;
-  var popupBtnComeText = $('.registration-popup__btn-come span');
-  if (!currentUsersCome) {
-    popupBtnComeText.text('Закрыть');
-  } else {
-    popupBtnComeText.text('Пришел');
-  }
-
-  $('.registration-popup').addClass('open-popup');
-  $('.popup-overlay__registration').removeClass('hidden');
-};
-
-});
-
 require.register("helpers/unique.js", function(exports, require, module) {
 "use strict";
 
@@ -265,29 +164,6 @@ var unique = function unique(arr) {
 };
 
 exports.default = unique;
-
-});
-
-require.register("helpers/userCard.js", function(exports, require, module) {
-'use strict';
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _jquery = require('jquery');
-
-var _jquery2 = _interopRequireDefault(_jquery);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var userCards = function userCards(data) {
-  _jquery2.default.each(data, function (index, value) {
-    (0, _jquery2.default)('.popup__text-registration').append('<div class="registration-item__content registration-item__content-' + (value.come === false ? 'success' : 'error') + '">\n        <img src="' + value.path + '" class="registration-item__img">\n        <div class="registration-item__text">\n          <label class="registration-item__text-label">\n            <input class="registration-item__text-input ' + (value.come === false ? '' : 'hidden') + '" type="radio" name="card" value="' + value._id + '">\n            <div class="registration-item__text-name">\n              ' + value.name + '\n            </div>\n          </label>\n        </div>\n        <div class="registration-item__status-wrapper">\n          <div class="registration-item__status">\n          ' + (value.come === false ? 'Не пришел' : 'Пришел') + '\n          </div>\n        </div>\n      </div>\n    </div>');
-  });
-};
-
-exports.default = userCards;
 
 });
 
@@ -314,7 +190,7 @@ require('jquery-validation/dist/additional-methods');
 
 require('./list.js');
 
-var _customFileInput = require('./helpers/customFileInput');
+var _customFileInput = require('./scripts/customFileInput');
 
 var _customFileInput2 = _interopRequireDefault(_customFileInput);
 
@@ -457,11 +333,11 @@ var _unique = require('./helpers/unique');
 
 var _unique2 = _interopRequireDefault(_unique);
 
-var _existPost = require('./helpers/existPost');
+var _existPost = require('./scripts/existPost');
 
 var _existPost2 = _interopRequireDefault(_existPost);
 
-var _comePost = require('./helpers/comePost');
+var _comePost = require('./scripts/comePost');
 
 var _comePost2 = _interopRequireDefault(_comePost);
 
@@ -568,6 +444,130 @@ popupButtonClose.click(function () {
     (0, _jquery2.default)('.popup').removeClass('open-popup');
   }
 });
+
+});
+
+require.register("scripts/comePost.js", function(exports, require, module) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function () {
+  var popupBtnComeText = $('.registration-popup__btn-come span');
+  if (popupBtnComeText.text() === 'Закрыть') {
+    $('.registration-popup').removeClass('open-popup');
+    $('.popup-overlay__registration').addClass('hidden');
+    document.querySelector('#registration-form .registration__input ').value = '';
+  } else {
+    $('.registration-popup').removeClass('open-popup');
+    $('.popup-overlay__registration').addClass('hidden');
+    $('.registration-popup__success').addClass('open-popup');
+    document.querySelector('#registration-form .registration__input ').value = '';
+  }
+};
+
+});
+
+require.register("scripts/customFileInput.js", function(exports, require, module) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _jquery = require("jquery");
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function () {
+    (0, _jquery2.default)(function () {
+        var wrapper = (0, _jquery2.default)(".file_upload"),
+            btn = wrapper.find(".button"),
+            lbl = wrapper.find("mark");
+        var inp = (0, _jquery2.default)("#form__file");
+
+        // Crutches for the :focus style:
+        inp.focus(function () {
+            wrapper.addClass("focus");
+        }).blur(function () {
+            wrapper.removeClass("focus");
+        });
+
+        var file_api = window.File && window.FileReader && window.FileList && window.Blob ? true : false;
+
+        inp.change(function () {
+            var file_name;
+            if (file_api && inp[0].files[0]) file_name = inp[0].files[0].name;else file_name = inp.val().replace("C:\\fakepath\\", '');
+
+            if (!file_name.length) return;
+
+            if (lbl.is(":visible")) {
+                lbl.text(file_name);
+                btn.text("Прикрепить фото");
+            } else btn.text(file_name);
+        }).change();
+    });
+    (0, _jquery2.default)(window).resize(function () {
+        (0, _jquery2.default)(".file_upload input").triggerHandler("change");
+    });
+};
+
+});
+
+require.register("scripts/existPost.js", function(exports, require, module) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _userCard = require('./userCard');
+
+var _userCard2 = _interopRequireDefault(_userCard);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (res) {
+  $(".registration-item__content").remove();
+  (0, _userCard2.default)(res.data.currentUserModel);
+  var currentUsersCome = $('#registration-form__come .registration-item__content-success ').length;
+  var popupBtnComeText = $('.registration-popup__btn-come span');
+  if (!currentUsersCome) {
+    popupBtnComeText.text('Закрыть');
+  } else {
+    popupBtnComeText.text('Пришел');
+  }
+
+  $('.registration-popup').addClass('open-popup');
+  $('.popup-overlay__registration').removeClass('hidden');
+};
+
+});
+
+require.register("scripts/userCard.js", function(exports, require, module) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var userCards = function userCards(data) {
+  _jquery2.default.each(data, function (index, value) {
+    (0, _jquery2.default)('.popup__text-registration').append('<div class="registration-item__content registration-item__content-' + (value.come === false ? 'success' : 'error') + '">\n        <img src="' + value.path + '" class="registration-item__img">\n        <div class="registration-item__text">\n          <label class="registration-item__text-label">\n            <input class="registration-item__text-input ' + (value.come === false ? '' : 'hidden') + '" type="radio" name="card" value="' + value._id + '">\n            <div class="registration-item__text-name">\n              ' + value.name + '\n            </div>\n          </label>\n        </div>\n        <div class="registration-item__status-wrapper">\n          <div class="registration-item__status">\n          ' + (value.come === false ? 'Не пришел' : 'Пришел') + '\n          </div>\n        </div>\n      </div>\n    </div>');
+  });
+};
+
+exports.default = userCards;
 
 });
 

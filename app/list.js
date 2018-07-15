@@ -3,8 +3,8 @@ import axios from 'axios'
 import validate from 'jquery-validation'
 import autocomplete from 'jquery-autocomplete'
 import unique from './helpers/unique'
-import ExistPost from './helpers/existPost'
-import comePost from './helpers/comePost'
+import ExistPost from './scripts/existPost'
+import comePost from './scripts/comePost'
 
 // autocomplete
 const autocompleteInput = jQuery('#registration-form .registration__input')

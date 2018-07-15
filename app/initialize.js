@@ -4,7 +4,7 @@ import axios from 'axios'
 import validate from 'jquery-validation'
 import 'jquery-validation/dist/additional-methods'
 import './list.js'
-import customFileInput from './helpers/customFileInput'
+import customFileInput from './scripts/customFileInput'
 
 // fullpage
 $(document).ready(function() {
