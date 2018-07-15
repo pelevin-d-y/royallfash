@@ -7,7 +7,6 @@ import ExistPost from './helpers/existPost'
 import comePost from './helpers/comePost'
 
 // autocomplete
-
 const autocompleteInput = jQuery('#registration-form .registration__input')
 
 axios.get('http://localhost:3000/fullnames').then((res) => {
@@ -25,9 +24,7 @@ axios.get('http://localhost:3000/fullnames').then((res) => {
   }, 4000);
 })
 
-
 // validation
-
 $("#registration-form").validate({
   rules: {
     name: {
@@ -42,8 +39,10 @@ $("#registration-form").validate({
   submitHandler: function(form) {
     let data = new FormData(form)
     let fieldData = data.get('name')
+    $('.preloader').removeClass('hidden')
 
     axios.post('http://localhost:3000/exist', {'name': fieldData}).then((res) => {
+      $('.preloader').addClass('hidden')
       if (res.data.exist === 'exist') {
         ExistPost(res)
       }
@@ -67,8 +66,10 @@ $("#registration-form__come").validate({
   submitHandler: function(form) {
     let data = new FormData(form)
     let fieldData = data.get('card')
+    $('.preloader').removeClass('hidden')
 
     axios.post('http://localhost:3000/come', {'name': fieldData}).then((res) => {
+      $('.preloader').addClass('hidden')
       comePost()
     }).catch((err) => {
       console.log(err)

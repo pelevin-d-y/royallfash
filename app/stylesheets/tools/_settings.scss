@@ -79,6 +79,27 @@ input.error {
   border: 1px solid #d94d71;
 }
 
+.preloader {
+  position: absolute;
+  z-index: 5000;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(42, 49, 64, 0.85);
+
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.preloader-container {
+  width: 200px;
+  height: 200px;
+  background: url('../images/preloader.svg') no-repeat center;
+}
+
 
 @media (max-width: 600px) {
   .container {

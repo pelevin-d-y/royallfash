@@ -29,41 +29,43 @@ if (document.querySelector('.location__map-map')) {
 let popupButtonClose = $('.popup-close')
 let popupButtonLink = $('.btn-popup__link')
 
-  // validate
-  $("#form").validate({
-    rules: {
-      form__surname: {
-        required: true
-      },
-      form__file: {
-        extension: 'png|jpg|jpeg',
-        required: true
-      }
+// validate
+$("#form").validate({
+  rules: {
+    form__surname: {
+      required: true
     },
-    messages: {
-      form__surname: {
-        required: 'Введите ваше ФИО'
-      },
-
-      form__file: {
-        required: 'Выберите файл',
-        extension: 'расширение должно быть jpg или png'
-      }
-    },
-    submitHandler: function(form) {
-      let data = new FormData(form)
-      const config = { headers: { 'Content-Type': 'multipart/form-data' } }
-
-      axios.post('http://localhost:3000/register', data, config).then((res) => {
-        if (res.data === 'success') {
-          $('.popup__text').text('Успешно!')
-          $('.popup').addClass('open-popup')
-        }
-      }).catch((err) => {
-        console.log(err)
-      })
+    form__file: {
+      extension: 'png|jpg|jpeg',
+      required: true
     }
-  });
+  },
+  messages: {
+    form__surname: {
+      required: 'Введите ваше ФИО'
+    },
+
+    form__file: {
+      required: 'Выберите файл',
+      extension: 'расширение должно быть jpg или png'
+    }
+  },
+  submitHandler: function(form) {
+    let data = new FormData(form)
+    const config = { headers: { 'Content-Type': 'multipart/form-data' } }
+
+    $('.preloader').removeClass('hidden')
+    axios.post('http://localhost:3000/register', data, config).then((res) => {
+      $('.preloader').addClass('hidden')
+      if (res.data === 'success') {
+        $('.popup__text').text('Успешно!')
+        $('.popup').addClass('open-popup')
+      }
+    }).catch((err) => {
+      console.log(err)
+    })
+  }
+});
 
 
 popupButtonLink.click(function() {
@@ -102,7 +104,6 @@ links.each(function(a, link) {
 customFileInput()
 
 // next code
-
 $('.container').click(function(evt) {
   evt.stopPropagation();
 })
