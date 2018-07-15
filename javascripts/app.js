@@ -367,7 +367,9 @@ var popupButtonLink = (0, _jquery2.default)('.btn-popup__link'
     var data = new FormData(form);
     var config = { headers: { 'Content-Type': 'multipart/form-data' } };
 
+    (0, _jquery2.default)('.preloader').removeClass('hidden');
     _axios2.default.post('http://localhost:3000/register', data, config).then(function (res) {
+      (0, _jquery2.default)('.preloader').addClass('hidden');
       if (res.data === 'success') {
         (0, _jquery2.default)('.popup__text').text('Успешно!');
         (0, _jquery2.default)('.popup').addClass('open-popup');
@@ -414,7 +416,6 @@ links.each(function (a, link) {
 );(0, _customFileInput2.default
 
 // next code
-
 )();(0, _jquery2.default)('.container').click(function (evt) {
   evt.stopPropagation();
 });
@@ -467,7 +468,6 @@ var _comePost2 = _interopRequireDefault(_comePost);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // autocomplete
-
 var autocompleteInput = jQuery('#registration-form .registration__input');
 
 _axios2.default.get('http://localhost:3000/fullnames').then(function (res) {
@@ -486,7 +486,6 @@ _axios2.default.get('http://localhost:3000/fullnames').then(function (res) {
 }
 
 // validation
-
 );(0, _jquery2.default)("#registration-form").validate({
   rules: {
     name: {
@@ -501,8 +500,10 @@ _axios2.default.get('http://localhost:3000/fullnames').then(function (res) {
   submitHandler: function submitHandler(form) {
     var data = new FormData(form);
     var fieldData = data.get('name');
+    (0, _jquery2.default)('.preloader').removeClass('hidden');
 
     _axios2.default.post('http://localhost:3000/exist', { 'name': fieldData }).then(function (res) {
+      (0, _jquery2.default)('.preloader').addClass('hidden');
       if (res.data.exist === 'exist') {
         (0, _existPost2.default)(res);
       }
@@ -526,8 +527,10 @@ _axios2.default.get('http://localhost:3000/fullnames').then(function (res) {
   submitHandler: function submitHandler(form) {
     var data = new FormData(form);
     var fieldData = data.get('card');
+    (0, _jquery2.default)('.preloader').removeClass('hidden');
 
     _axios2.default.post('http://localhost:3000/come', { 'name': fieldData }).then(function (res) {
+      (0, _jquery2.default)('.preloader').addClass('hidden');
       (0, _comePost2.default)();
     }).catch(function (err) {
       console.log(err);
