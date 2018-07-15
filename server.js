@@ -10,7 +10,7 @@ app.use(bodyParser.json())
 app.use(express.static(__dirname + "/public"));
 app.use("/uploads", express.static("uploads"));
 
-mongoose.connect("mongodb://206.189.49.75:27017/users").then(() => {
+mongoose.connect("mongodb://localhost:27017/users").then(() => {
   const mongooseUserModel = userModel()
 
   app.post('/register', multerStorage(), (req, res, next) => {

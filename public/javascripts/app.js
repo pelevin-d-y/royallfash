@@ -244,7 +244,7 @@ var popupButtonLink = (0, _jquery2.default)('.btn-popup__link'
     var config = { headers: { 'Content-Type': 'multipart/form-data' } };
 
     (0, _jquery2.default)('.preloader').removeClass('hidden');
-    _axios2.default.post('http://localhost:3000/register', data, config).then(function (res) {
+    _axios2.default.post('http://localhost:8080/register', data, config).then(function (res) {
       (0, _jquery2.default)('.preloader').addClass('hidden');
       if (res.data === 'success') {
         (0, _jquery2.default)('.popup__text').text('Успешно!');
@@ -346,7 +346,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 // autocomplete
 var autocompleteInput = jQuery('#registration-form .registration__input');
 
-_axios2.default.get('http://localhost:3000/fullnames').then(function (res) {
+_axios2.default.get('http://localhost:8080/fullnames').then(function (res) {
   var autocompleteArray = [];
   res.data.forEach(function (element) {
     autocompleteArray.push(element.name);
@@ -378,7 +378,7 @@ _axios2.default.get('http://localhost:3000/fullnames').then(function (res) {
     var fieldData = data.get('name');
     (0, _jquery2.default)('.preloader').removeClass('hidden');
 
-    _axios2.default.post('http://localhost:3000/exist', { 'name': fieldData }).then(function (res) {
+    _axios2.default.post('http://localhost:8080/exist', { 'name': fieldData }).then(function (res) {
       (0, _jquery2.default)('.preloader').addClass('hidden');
       if (res.data.exist === 'exist') {
         (0, _existPost2.default)(res);
@@ -405,7 +405,7 @@ _axios2.default.get('http://localhost:3000/fullnames').then(function (res) {
     var fieldData = data.get('card');
     (0, _jquery2.default)('.preloader').removeClass('hidden');
 
-    _axios2.default.post('http://localhost:3000/come', { 'name': fieldData }).then(function (res) {
+    _axios2.default.post('http://localhost:8080/come', { 'name': fieldData }).then(function (res) {
       (0, _jquery2.default)('.preloader').addClass('hidden');
       (0, _comePost2.default)();
     }).catch(function (err) {
