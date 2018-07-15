@@ -93,12 +93,12 @@ body
             script(type='text/javascript').
               function init_map(){var myOptions = {zoom:15,center:new google.maps.LatLng(47.273204,39.82210199999997),mapTypeId: google.maps.MapTypeId.ROADMAP};map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions);marker = new google.maps.Marker({map: map,position: new google.maps.LatLng(47.273204,39.82210199999997)});infowindow = new google.maps.InfoWindow({content:'Ростов-на-Дону, Шолохова 316'});google.maps.event.addListener(marker, 'click', function(){infowindow.open(map,marker);});infowindow.open(map,marker);}google.maps.event.addDomListener(window, 'load', init_map);
             .location__map-text
-              | Вся информация о трансфере будет вам выслана дополнительно
+              | Вся информация о трансфере будет выслана Вам дополнительно
 
     section.container.section
       .contacts
         .contacts__questions
-          | При возникновении вопросов вы можете обратиться:
+          | При возникновении вопросов Вы можете обратиться:
         .contacts__name
           | Мария Гурьева
         .contacts__contacts-block
