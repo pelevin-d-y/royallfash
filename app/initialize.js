@@ -4,6 +4,7 @@ import axios from 'axios'
 import validate from 'jquery-validation'
 import 'jquery-validation/dist/additional-methods'
 import './list.js'
+import customFileInput from './helpers/customFileInput'
 
 // fullpage
 $(document).ready(function() {
@@ -24,7 +25,7 @@ if (document.querySelector('.location__map-map')) {
   })
 }
 
-// popup
+
 let popupButtonClose = $('.popup-close')
 let popupButtonLink = $('.btn-popup__link')
 
@@ -97,6 +98,9 @@ links.each(function(a, link) {
   })
 })
 
+// file input
+customFileInput()
+
 // next code
 
 $('.container').click(function(evt) {
@@ -115,41 +119,3 @@ $('.popup').click(function(evt) {
   evt.stopPropagation();
 })
 
-
-// file
-$(function(){
-	var wrapper = $( ".file_upload" ),
-			btn = wrapper.find( ".button" ),
-      lbl = wrapper.find( "mark" );
-  var inp = $( "#form__file" );
-
-	// Crutches for the :focus style:
-	inp.focus(function(){
-			wrapper.addClass( "focus" );
-	}).blur(function(){
-			wrapper.removeClass( "focus" );
-	});
-
-	var file_api = ( window.File && window.FileReader && window.FileList && window.Blob ) ? true : false;
-
-	inp.change(function(){
-			var file_name;
-			if( file_api && inp[ 0 ].files[ 0 ] )
-					file_name = inp[ 0 ].files[ 0 ].name;
-			else
-					file_name = inp.val().replace( "C:\\fakepath\\", '' );
-
-			if( ! file_name.length )
-					return;
-
-			if( lbl.is( ":visible" ) ){
-					lbl.text( file_name );
-					btn.text( "Прикрепить фото" );
-			}else
-					btn.text( file_name );
-	}).change();
-
-});
-$( window ).resize(function(){
-	$( ".file_upload input" ).triggerHandler( "change" );
-});

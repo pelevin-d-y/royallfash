@@ -12,6 +12,7 @@ app.use("/uploads", express.static("uploads"));
 
 mongoose.connect("mongodb://localhost:27017/users").then(() => {
   const mongooseUserModel = userModel()
+
   app.post('/register', multerStorage(), (req, res, next) => {
     let DbUser = mongooseUserModel ({
       name: req.body.form__surname,
@@ -26,8 +27,8 @@ mongoose.connect("mongodb://localhost:27017/users").then(() => {
 
     return res.send('success')
   })
+
   app.post('/exist', (req, res) => {
-    console.log(req.body)
      return mongooseUserModel.find({ 'name': req.body.name }, (err, currentUserModel) => {
       if (err) return console.log(err)
       if (currentUserModel) {
@@ -46,7 +47,6 @@ mongoose.connect("mongodb://localhost:27017/users").then(() => {
   })
 
   app.get('/fullnames', (req, res) => {
-    console.log('req.body fullname', req.body)
     return mongooseUserModel.find({}, (err, currentUserModel) => {
       res.send(currentUserModel)
     })

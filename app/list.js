@@ -1,8 +1,32 @@
 import $ from "jquery"
 import axios from 'axios'
 import validate from 'jquery-validation'
-import userCards from './userCard'
 import autocomplete from 'jquery-autocomplete'
+import unique from './helpers/unique'
+import ExistPost from './helpers/existPost'
+import comePost from './helpers/comePost'
+
+// autocomplete
+
+const autocompleteInput = jQuery('#registration-form .registration__input')
+
+axios.get('http://localhost:3000/fullnames').then((res) => {
+  let autocompleteArray = []
+  res.data.forEach(element => {
+    autocompleteArray.push(element.name)
+  });
+  const uniqueAutocompleteArray = unique(autocompleteArray)
+
+  autocompleteInput.autocomplete({
+    source: [uniqueAutocompleteArray],
+    limit: 20,
+    visibleLimit: 6,
+    showHint: false
+  }, 4000);
+})
+
+
+// validation
 
 $("#registration-form").validate({
   rules: {
@@ -21,18 +45,7 @@ $("#registration-form").validate({
 
     axios.post('http://localhost:3000/exist', {'name': fieldData}).then((res) => {
       if (res.data.exist === 'exist') {
-        $(".registration-item__content").remove()
-        userCards(res.data.currentUserModel)
-        const currentUsersCome = $('#registration-form__come .registration-item__content-success ').length
-        const popupBtnComeText = $('.registration-popup__btn-come span')
-        if (!currentUsersCome) {
-          popupBtnComeText.text('Закрыть')
-        } else {
-          popupBtnComeText.text('Пришел')
-        }
-        
-        $('.registration-popup').addClass('open-popup');
-        $('.popup-overlay__registration').removeClass('hidden')
+        ExistPost(res)
       }
     }).catch((err) => {
       console.log(err)
@@ -56,24 +69,15 @@ $("#registration-form__come").validate({
     let fieldData = data.get('card')
 
     axios.post('http://localhost:3000/come', {'name': fieldData}).then((res) => {
-      const popupBtnComeText = $('.registration-popup__btn-come span')
-      if (popupBtnComeText.text() === 'Закрыть') {
-        $('.registration-popup').removeClass('open-popup')
-        $('.popup-overlay__registration').addClass('hidden')
-        document.querySelector('#registration-form .registration__input ').value = ''
-
-      } else {
-        $('.registration-popup').removeClass('open-popup')
-        $('.popup-overlay__registration').addClass('hidden')
-        $('.registration-popup__success').addClass('open-popup')
-        document.querySelector('#registration-form .registration__input ').value = ''
-      }
+      comePost()
     }).catch((err) => {
       console.log(err)
     })
   }
 })
 
+
+// popups
 let popupButtonClose = $('.popup-close')
 let popupButtonLink = $('.btn-popup__link')
 
@@ -103,33 +107,3 @@ $('.popup-overlay').click(function(evt) {
     $('.popup').removeClass('open-popup');
   }
 });
-
-
-// autocomplete
-
-
-const autocompleteInput = $('#registration-form .registration__input')
-
-
-axios.get('http://localhost:3000/fullnames').then((res) => {
-  let autocompleteArray = []
-
-  res.data.forEach(element => {
-    autocompleteArray.push(element.name)
-  });
-
-  let filtredAutocompliteArray = [];
-  autocompleteArray.forEach(element => {
-
-    autocompleteArray.forEach((someElement) => {
-      if (element === someElement) {
-        filtredAutocompliteArray.push(element)
-      }
-    })
-  })
-  console.log(filtredAutocompliteArray)
-})
-
-// let FullNameArray = dataList.map((element) => {
-//   return element['ФИО'];
-// })
