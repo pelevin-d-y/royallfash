@@ -55,7 +55,7 @@ $("#form").validate({
     const config = { headers: { 'Content-Type': 'multipart/form-data', "Access-Control-Allow-Origin": "*"} }
 
     $('.preloader').removeClass('hidden')
-    axios.post('http://localhost:8080/register', data, config).then((res) => {
+    axios.post('http://pridebeeline.party/register', data, config).then((res) => {
       $('.preloader').addClass('hidden')
       if (res.data === 'success') {
         $('.popup__text').text('Успешно!')
