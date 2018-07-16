@@ -11,7 +11,7 @@ const autocompleteInput = jQuery('#registration-form .registration__input')
 const config = { headers: {
   'Access-Control-Allow-Origin': '*'
  }}
-axios.get('http://pridebeeline.party/fullnames', config).then((res) => {
+axios.get('https://pridebeeline.party/fullnames', config).then((res) => {
   let autocompleteArray = []
   res.data.forEach(element => {
     autocompleteArray.push(element.name)
@@ -43,7 +43,7 @@ $("#registration-form").validate({
     let fieldData = data.get('name')
     $('.preloader').removeClass('hidden')
 
-    axios.post('pridebeeline.party/exist', {'name': fieldData}, config).then((res) => {
+    axios.post('https://pridebeeline.party/exist', {'name': fieldData}, config).then((res) => {
       $('.preloader').addClass('hidden')
       if (res.data.exist === 'exist') {
         ExistPost(res)
@@ -70,7 +70,7 @@ $("#registration-form__come").validate({
     let fieldData = data.get('card')
     $('.preloader').removeClass('hidden')
 
-    axios.post('pridebeeline.party/come', {'name': fieldData}, config).then((res) => {
+    axios.post('https://pridebeeline.party/come', {'name': fieldData}, config).then((res) => {
       $('.preloader').addClass('hidden')
       comePost()
     }).catch((err) => {
