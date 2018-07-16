@@ -8,8 +8,8 @@ import comePost from './scripts/comePost'
 
 // autocomplete
 const autocompleteInput = jQuery('#registration-form .registration__input')
-
-axios.get('http://localhost:8080/fullnames').then((res) => {
+const config = { headers: { "Access-Control-Allow-Origin": "*"} }
+axios.get('http://localhost:8080/fullnames', config).then((res) => {
   let autocompleteArray = []
   res.data.forEach(element => {
     autocompleteArray.push(element.name)
@@ -41,7 +41,7 @@ $("#registration-form").validate({
     let fieldData = data.get('name')
     $('.preloader').removeClass('hidden')
 
-    axios.post('http://localhost:8080/exist', {'name': fieldData}).then((res) => {
+    axios.post('http://localhost:8080/exist', {'name': fieldData}, config).then((res) => {
       $('.preloader').addClass('hidden')
       if (res.data.exist === 'exist') {
         ExistPost(res)
@@ -68,7 +68,7 @@ $("#registration-form__come").validate({
     let fieldData = data.get('card')
     $('.preloader').removeClass('hidden')
 
-    axios.post('http://localhost:8080/come', {'name': fieldData}).then((res) => {
+    axios.post('http://localhost:8080/come', {'name': fieldData}, config).then((res) => {
       $('.preloader').addClass('hidden')
       comePost()
     }).catch((err) => {

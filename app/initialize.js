@@ -52,7 +52,7 @@ $("#form").validate({
   },
   submitHandler: function(form) {
     let data = new FormData(form)
-    const config = { headers: { 'Content-Type': 'multipart/form-data' } }
+    const config = { headers: { 'Content-Type': 'multipart/form-data', "Access-Control-Allow-Origin": "*"} }
 
     $('.preloader').removeClass('hidden')
     axios.post('http://localhost:8080/register', data, config).then((res) => {

@@ -7,8 +7,8 @@ const userModel = require('./server/userModel')
 const app = express()
 app.use(bodyParser.json())
 
-app.use(express.static(__dirname + "/public"));
-app.use("/uploads", express.static("uploads"));
+app.use(express.static(__dirname + "/public"))
+app.use("/uploads", express.static("uploads"))
 
 mongoose.connect("mongodb://localhost:27017/users").then(() => {
   const mongooseUserModel = userModel()
@@ -43,7 +43,7 @@ mongoose.connect("mongodb://localhost:27017/users").then(() => {
     return mongooseUserModel.update({ _id: req.body.name }, { $set: { come: true }}, (err, model) => {
       if (err) return console.log('update', err)
       return res.send(model)
-    });
+    })
   })
 
   app.get('/fullnames', (req, res) => {
@@ -53,4 +53,4 @@ mongoose.connect("mongodb://localhost:27017/users").then(() => {
   })
 });
 
-app.listen(8080);
+app.listen(8080)
