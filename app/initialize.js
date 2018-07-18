@@ -30,6 +30,11 @@ let popupButtonClose = $('.popup-close')
 let popupButtonLink = $('.btn-popup__link')
 
 // validate
+
+$.validator.addMethod('filesize', function (value, element, param) {
+  return this.optional(element) || (element.files[0].size <= param)
+}, 'File size must be less than {0}');
+
 $("#form").validate({
   rules: {
     form__surname: {
@@ -37,6 +42,7 @@ $("#form").validate({
     },
     form__file: {
       extension: 'png|jpg|jpeg',
+      filesize : 1000000,
       required: true
     }
   },
@@ -47,7 +53,8 @@ $("#form").validate({
 
     form__file: {
       required: 'Выберите файл',
-      extension: 'расширение должно быть jpg или png'
+      extension: 'Расширение должно быть jpg или png',
+      filesize: 'Большой размер файла'
     }
   },
   submitHandler: function(form) {
