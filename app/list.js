@@ -11,7 +11,7 @@ const autocompleteInput = jQuery('#registration-form .registration__input')
 const config = { headers: {
   'Access-Control-Allow-Origin': '*'
  }}
-axios.get('http://localhost:8080/fullnames', config).then((res) => {
+axios.get('https://pridebeeline.party/fullnames', config).then((res) => {
   let autocompleteArray = []
   res.data.forEach(element => {
     autocompleteArray.push(element.name)
@@ -114,8 +114,7 @@ $('.popup-overlay').click(function(evt) {
 // data.js
 
 $('.list-btn').click(() => {
-  console.log('asdasds')
-  axios.get('http://localhost:8080/fullnames', config).then((res) => {
-  console.log(res)
+  axios.get('https://pridebeeline.party/data', config).then((res) => {
+    console.log(res.data)
   })
 })

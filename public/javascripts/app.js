@@ -148,6 +148,25 @@ var __makeRelativeRequire = function(require, mappings, pref) {
     return require(name);
   }
 };
+require.register("helpers/unique.js", function(exports, require, module) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var unique = function unique(arr) {
+  var obj = {};
+  arr.forEach(function (element) {
+    var str = element;
+    obj[str] = true; // запомнить строку в виде свойства объекта
+  });
+  return Object.keys(obj);
+};
+
+exports.default = unique;
+
+});
+
 require.register("initialize.js", function(exports, require, module) {
 'use strict';
 
@@ -336,7 +355,7 @@ var autocompleteInput = jQuery('#registration-form .registration__input');
 var config = { headers: {
     'Access-Control-Allow-Origin': '*'
   } };
-_axios2.default.get('http://localhost:8080/fullnames', config).then(function (res) {
+_axios2.default.get('https://pridebeeline.party/fullnames', config).then(function (res) {
   var autocompleteArray = [];
   res.data.forEach(function (element) {
     autocompleteArray.push(element.name);
@@ -438,11 +457,33 @@ popupButtonClose.click(function () {
 // data.js
 
 (0, _jquery2.default)('.list-btn').click(function () {
-  console.log('asdasds');
-  _axios2.default.get('http://localhost:8080/fullnames', config).then(function (res) {
-    console.log(res);
+  _axios2.default.get('https://pridebeeline.party/data', config).then(function (res) {
+    console.log(res.data);
   });
 });
+
+});
+
+require.register("scripts/comePost.js", function(exports, require, module) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+exports.default = function () {
+  var popupBtnComeText = $('.registration-popup__btn-come span');
+  if (popupBtnComeText.text() === 'Закрыть') {
+    $('.registration-popup').removeClass('open-popup');
+    $('.popup-overlay__registration').addClass('hidden');
+    document.querySelector('#registration-form .registration__input ').value = '';
+  } else {
+    $('.registration-popup').removeClass('open-popup');
+    $('.popup-overlay__registration').addClass('hidden');
+    $('.registration-popup__success').addClass('open-popup');
+    document.querySelector('#registration-form .registration__input ').value = '';
+  }
+};
 
 });
 
@@ -491,6 +532,59 @@ exports.default = function () {
         (0, _jquery2.default)(".file_upload input").triggerHandler("change");
     });
 };
+
+});
+
+require.register("scripts/existPost.js", function(exports, require, module) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _userCard = require('./userCard');
+
+var _userCard2 = _interopRequireDefault(_userCard);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (res) {
+  $(".registration-item__content").remove();
+  (0, _userCard2.default)(res.data.currentUserModel);
+  var currentUsersCome = $('#registration-form__come .registration-item__content-success ').length;
+  var popupBtnComeText = $('.registration-popup__btn-come span');
+  if (!currentUsersCome) {
+    popupBtnComeText.text('Закрыть');
+  } else {
+    popupBtnComeText.text('Пришел');
+  }
+
+  $('.registration-popup').addClass('open-popup');
+  $('.popup-overlay__registration').removeClass('hidden');
+};
+
+});
+
+require.register("scripts/userCard.js", function(exports, require, module) {
+'use strict';
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _jquery = require('jquery');
+
+var _jquery2 = _interopRequireDefault(_jquery);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var userCards = function userCards(data) {
+  _jquery2.default.each(data, function (index, value) {
+    (0, _jquery2.default)('.popup__text-registration').append('<div class="registration-item__content registration-item__content-' + (value.come === false ? 'success' : 'error') + '">\n        <img src="' + value.path + '" class="registration-item__img">\n        <div class="registration-item__text">\n          <label class="registration-item__text-label">\n            <input class="registration-item__text-input ' + (value.come === false ? '' : 'hidden') + '" type="radio" name="card" value="' + value._id + '">\n            <div class="registration-item__text-name">\n              ' + value.name + '\n            </div>\n          </label>\n        </div>\n        <div class="registration-item__status-wrapper">\n          <div class="registration-item__status">\n          ' + (value.come === false ? 'Не пришел' : 'Пришел') + '\n          </div>\n        </div>\n      </div>\n    </div>');
+  });
+};
+
+exports.default = userCards;
 
 });
 

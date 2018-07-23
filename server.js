@@ -3,7 +3,7 @@ const mongoose = require('mongoose')
 const bodyParser = require("body-parser")
 const multerStorage = require('./server/multerStorage')
 const userModel = require('./server/userModel')
-// const fs = require('fs');
+const fs = require('fs');
 
 const app = express()
 app.use(bodyParser.json())
@@ -49,11 +49,16 @@ mongoose.connect("mongodb://localhost:27017/users").then(() => {
 
   app.get('/fullnames', (req, res) => {
     return mongooseUserModel.find({}, (err, currentUserModel) => {
-      // fs.writeFile("uploads/hello.txt", currentUserModel)
       res.send(currentUserModel)
     })
   })
 
+  app.get('/data', (req, res) => {
+    return mongooseUserModel.find({}, (err, currentUserModel) => {
+      res.send(currentUserModel)
+      fs.writeFile("uploads/users.txt", currentUserModel)
+    })
+  })
 });
 
 app.listen(8080)
