@@ -114,7 +114,7 @@ $('.popup-overlay').click(function(evt) {
 // data.js
 
 $('.list-btn').click(() => {
-  axios.get('https://pridebeeline.party/data', config).then((res) => {
+  axios.get('http://pridebeeline.party/data', config).then((res) => {
     console.log(res.data)
   })
 })

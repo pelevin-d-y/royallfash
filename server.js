@@ -56,7 +56,7 @@ mongoose.connect("mongodb://localhost:27017/users").then(() => {
   app.get('/data', (req, res) => {
     return mongooseUserModel.find({}, (err, currentUserModel) => {
       res.send(currentUserModel)
-      fs.writeFile("uploads/users.txt", currentUserModel)
+      fs.writeFile("uploads/users.csv", currentUserModel)
     })
   })
 });
