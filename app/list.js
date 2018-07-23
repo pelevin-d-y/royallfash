@@ -11,7 +11,7 @@ const autocompleteInput = jQuery('#registration-form .registration__input')
 const config = { headers: {
   'Access-Control-Allow-Origin': '*'
  }}
-axios.get('https://pridebeeline.party/fullnames', config).then((res) => {
+axios.get('http://localhost:8080/fullnames', config).then((res) => {
   let autocompleteArray = []
   res.data.forEach(element => {
     autocompleteArray.push(element.name)
@@ -79,7 +79,6 @@ $("#registration-form__come").validate({
   }
 })
 
-
 // popups
 let popupButtonClose = $('.popup-close')
 let popupButtonLink = $('.btn-popup__link')
@@ -110,3 +109,13 @@ $('.popup-overlay').click(function(evt) {
     $('.popup').removeClass('open-popup');
   }
 });
+
+
+// data.js
+
+$('.list-btn').click(() => {
+  console.log('asdasds')
+  axios.get('http://localhost:8080/fullnames', config).then((res) => {
+  console.log(res)
+  })
+})
